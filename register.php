@@ -6,7 +6,7 @@
 
     session_start();
     if (isset($_SESSION['SESSION_EMAIL'])) {
-        header("Location: login.php");
+        header("Location: signin.php");
         die();
     }
 
@@ -107,7 +107,7 @@
             <button name="submit" class="btn" type="submit">Register</button>
         </form>
         <p>
-    Already have an account? <a href="login.php">Login</a>
+    Already have an account? <a href="signin.php">Login</a>
     </p>
     </div>
 </body>
