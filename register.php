@@ -24,7 +24,7 @@ if (isset($_POST['submit'])) {
   $code = mysqli_real_escape_string($conn, md5(rand()));
 
   if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='{$email}'")) > 0) {
-    $msg = "<div class='alert alert-danger'>{$email} - This email address has been already exists.</div>";
+    $msg = "<div class='alert alert-error'>{$email} - This email address has been already exists.</div>";
   } else {
     if ($password === $confirm_password) {
       $sql = "INSERT INTO users (name, email, password, code) VALUES ('{$name}', '{$email}', '{$password}', '{$code}')";
@@ -61,12 +61,12 @@ if (isset($_POST['submit'])) {
           echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
         echo "</div>";
-        $msg = "<div class='alert alert-info'>We've send a verification link on your email address.</div>";
+        $msg = "<div class='alert alert-success'>We've send a verification link on your email address.</div>";
       } else {
-        $msg = "<div class='alert alert-danger'>Something wrong went.</div>";
+        $msg = "<div class='alert alert-error'>Something went wrong in sending the verification please try again.</div>";
       }
     } else {
-      $msg = "<div class='alert alert-danger'>Password and Confirm Password do not match</div>";
+      $msg = "<div class='alert alert-error'>Password and Confirm Password do not match</div>";
     }
   }
 }
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Actor&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+
   <title>Lost Link</title>
   <style>
     .container {
@@ -225,21 +225,41 @@ if (isset($_POST['submit'])) {
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script>
-    // JavaScript code to show iziToast message
-    <?php
-    if (!empty($msg)) {
-      echo "var message = '" . addslashes($msg) . "';";
-      echo "iziToast.show({
-        title: 'Message',
-        message: message,
-        color: 'blue',
-        position: 'topCenter',
-        timeout: 5000,
-        transitionIn: 'fadeInDown',
-        close: true
-      });"; // Removed the semicolon here
-    }
-    ?>
+<?php
+if (!empty($msg)) {
+  echo "var message = '" . addslashes($msg) . "';";
+  if (strpos($msg, 'error') !== false) {
+    // Display error message in red
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'red',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: true, // Include the close button inside the box
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  } else {
+    // Display success message in green
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'green',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: true, // Include the close button inside the box
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  }
+}
+?>
+
+
+
+
+
 </script>
 
 

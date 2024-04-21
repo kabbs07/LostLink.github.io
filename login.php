@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Actor&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
   <title>Lost Link</title>
   <style>
     .container {
@@ -142,7 +143,7 @@
       if ($result && mysqli_num_rows($result) === 1) {
         $row = mysqli_fetch_assoc($result);
 
-        if (empty($row['code'])) {
+        if (strpos($row['code'], '') !== false) {
           $_SESSION['SESSION_EMAIL'] = $email;
           if ($row['is_admin']) {
             header("Location: admin.php"); // Redirect to admin page if user is admin
@@ -152,10 +153,10 @@
             exit(); // Exit after redirection
           }
         } else {
-          $msg = "<div class='alert alert-info'>First verify your account and try again.</div>";
+          $msg = "<div class='alert alert-error'>First verify your account and try again.</div>";
         }
       } else {
-        $msg = "<div class='alert alert-danger'>Email or password do not match.</div>";
+        $msg = "<div class='alert alert-error'>Email or password do not match.</div>";
       }
     }
     ?>
@@ -167,12 +168,49 @@
       <div class="password-input">
         <input type="password" id="password" name="password" placeholder=" " required />
         <label for="password">Password</label>
-        <a href="#" class="forgot-password">Forgot Password?</a>
+        <a href="forgot-password.php" class="forgot-password">Forgot Password?</a>
       </div>
       <button type="submit" name="submit">Sign In</button>
     </form>
-    <?php echo $msg; ?>
   </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script>
+<?php
+if (!empty($msg)) {
+  echo "var message = '" . addslashes($msg) . "';";
+  if (strpos($msg, 'error') !== false) {
+    // Display error message in red
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'red',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: true, // Include the close button inside the box
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  } else {
+    // Display success message in green
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'green',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: true, // Include the close button inside the box
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  }
+}
+?>
+
+
+
+
+
+</script>
 
 </html>
