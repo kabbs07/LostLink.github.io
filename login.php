@@ -64,7 +64,7 @@
       <p class="lead">Create an ad of your lost item and let your friends know</p>
       <div class="mt-4">
         <div class="mb-3">
-          <button class="login-btn">Login</button>
+          <button class="login-btn" onclick="redirectToLoginForm()">Login</button>
         </div>
         <div>
           <button class="register-btn">Register</button>
@@ -72,6 +72,13 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function redirectToLoginForm() {
+  window.location.href = "signin.php";
+}
+</script>
+
 
   <!-- Bootstrap JS (optional) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
