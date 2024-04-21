@@ -74,15 +74,29 @@
     <div class="text-center">
       <img src="img1.png" alt="">
       <h1>Lost Something?</h1>
-      <p class="lead">Create an ad of your lost item and let your friends know</p>
-      <div class="mt-4">
-        <div class="mb-3">
-          <a href="login.php" class= "login-btn">Login</a>
-        </div>
-        <div>
-        <a href="register.php" class= "register-btn">Register</a>
-        </div>
-      </div>
+      <?php
+      // Start or resume the session
+      session_start();
+
+      // Check if the user is logged in
+    // Check if the user is logged in
+    if (isset($_SESSION['SESSION_EMAIL'])) {
+      // If logged in, redirect to homepage.php
+      header("Location: homepage.php");
+      exit();
+    } else {
+        // If not logged in, show the default message
+        echo '<p class="lead">Create an ad of your lost item and let your friends know</p>';
+        echo '<div class="mt-4">';
+        echo '<div class="mb-3">';
+        echo '<a href="login.php" class= "login-btn">Login</a>';
+        echo '</div>';
+        echo '<div>';
+        echo '<a href="register.php" class= "register-btn">Register</a>';
+        echo '</div>';
+        echo '</div>';
+      }
+      ?>
     </div>
   </div>
 
