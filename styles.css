@@ -21,6 +21,7 @@ body {
     cursor: pointer;
     border-radius: 25px 25px;
     transition: 200ms ease-in-out;
+    margin-top: 2rem;
   }
   h1{
     font-family: "Actor", sans-serif;
@@ -31,7 +32,9 @@ body {
   p{
     font-family: "Poppins", sans-serif;
     color: #001B297A;
-
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: -2rem;
   }
   button:hover {
     font-size: 17px;

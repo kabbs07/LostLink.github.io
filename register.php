@@ -25,13 +25,17 @@
     }
 
     .email-input,
-    .password-input {
+    .password-input,
+    .name-input,
+    .confirm-password-input {
       position: relative;
       margin-bottom: 20px;
     }
 
     .email-input input,
-    .password-input input {
+    .password-input input,
+    .name-input input,
+    .confirm-password-input input {
       width: 100%;
       padding: 10px 0;
       border: none;
@@ -42,12 +46,16 @@
     }
 
     .email-input input:focus,
-    .password-input input:focus {
+    .password-input input:focus,
+    .name-input input:focus,
+    .confirm-password-input input:focus {
       border-bottom: 2px solid #001B299C; /* Adjusted border-bottom thickness for focus state */
     }
 
     .email-input label,
-    .password-input label {
+    .password-input label,
+    .name-input label,
+    .confirm-password-input label {
       position: absolute;
       top: 0;
       left: 0;
@@ -62,7 +70,11 @@
     .email-input input:focus + label,
     .email-input input:not(:placeholder-shown) + label,
     .password-input input:focus + label,
-    .password-input input:not(:placeholder-shown) + label {
+    .password-input input:not(:placeholder-shown) + label,
+    .name-input input:focus + label,
+    .name-input input:not(:placeholder-shown) + label,
+    .confirm-password-input input:focus + label,
+    .confirm-password-input input:not(:placeholder-shown) + label {
       transform: translateY(-20px);
       font-size: 14px;
       color: #001B299C;
@@ -86,16 +98,7 @@
       background-color:#001B299C;
     }
 
-    .forgot-password {
-      position: absolute;
-      top: 100%;
-      right: 0;
-      font-family: "Poppins", sans-serif;
-      font-size: 12px;
-      color: #4252E5;
-      text-decoration: none;
-      margin-top: 5px;
-    }
+
 
     #back-icon {
       margin-top: 10px;
@@ -105,8 +108,12 @@
 <body>
   <a href="welcome.php"><img src="back.png" alt="" id="back-icon"></a>
   <div class="container">
-    <h1>Sign In</h1>
+    <h1>Create Account</h1>
     <form>
+      <div class="name-input">
+        <input type="text" id="name" placeholder=" " />
+        <label for="name">Name</label>
+      </div>
       <div class="email-input">
         <input type="email" id="email" placeholder=" " />
         <label for="email">Email</label>
@@ -114,9 +121,12 @@
       <div class="password-input">
         <input type="password" id="password" placeholder=" " />
         <label for="password">Password</label>
-        <a href="#" class="forgot-password">Forgot Password?</a>
       </div>
-      <button type="submit">Sign In</button>
+      <div class="confirm-password-input">
+        <input type="password" id="confirm-password" placeholder=" " />
+        <label for="confirm-password">Confirm Password</label>
+      </div>
+      <button type="submit">Register</button>
     </form>
   </div>
 </body>

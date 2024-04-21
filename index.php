@@ -13,7 +13,7 @@
 <body>
   <div class="welcome-screen">
     <h1>Lost Link</h1>
-    <p>Find what's lost, reunite what's found: 
+    <p>Find what's lost, reunite what's found:<br> 
 Your compass in a world of lost things.</p>
     <button onclick="redirectToLoginForm()">Welcome</button>
   </div>
@@ -23,6 +23,6 @@ Your compass in a world of lost things.</p>
 
 <script>
     function redirectToLoginForm() {
-  window.location.href = "login.php";
+  window.location.href = "welcome.php";
 }
 </script>
