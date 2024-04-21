@@ -79,6 +79,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Actor&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
     <title>Lost Link</title>
     <style>
         .container {
@@ -203,4 +204,21 @@
         </form>
     </div>
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script>
+    // JavaScript code to show iziToast message
+    <?php
+    if (!empty($msg)) {
+      echo "iziToast.show({
+        title: 'Message',
+        message: '{$msg}',
+        color: 'blue',
+        position: 'topCenter',
+        timeout: 5000,
+        transitionIn: 'fadeInDown',
+        close: true,
+      });";
+    }
+    ?>
+  </script>
 </html>
