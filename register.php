@@ -1,10 +1,12 @@
 <?php
 
+session_start();
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-session_start();
+
 if (isset($_SESSION['SESSION_EMAIL'])) {
   header("Location: login.php");
   die();
@@ -22,12 +24,14 @@ if (isset($_POST['submit'])) {
   $password = mysqli_real_escape_string($conn, md5($_POST['password']));
   $confirm_password = mysqli_real_escape_string($conn, md5($_POST['confirm-password']));
   $code = mysqli_real_escape_string($conn, md5(rand()));
+  $hashed_password = mysqli_real_escape_string($conn, md5($_POST['password']));
 
   if (mysqli_num_rows(mysqli_query($conn, "SELECT * FROM users WHERE email='{$email}'")) > 0) {
-    $msg = "<div class='alert alert-error'>{$email} - This email address has been already exists.</div>";
+    $msg = "<div class='alert alert-error'>{$email} - This email address already exists.</div>";
   } else {
     if ($password === $confirm_password) {
-      $sql = "INSERT INTO users (name, email, password, code) VALUES ('{$name}', '{$email}', '{$password}', '{$code}')";
+      // Use $hashed_password in your SQL query
+      $sql = "INSERT INTO users (name, email, password, code, is_admin) VALUES ('{$name}', '{$email}', '{$hashed_password}', '{$code}', 0)";
       $result = mysqli_query($conn, $sql);
 
       if ($result) {

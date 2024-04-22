@@ -1,33 +1,39 @@
 <?php
-// Check if the request is a POST request
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Get the JSON data from the request body
-    $json = file_get_contents('php://input');
-    $data = json_decode($json);
+// Include necessary files and initialize database connection
+include 'config.php'; // Contains database connection details
+require 'vendor/autoload.php'; // Include the QR code library
 
-    // Check if the data is valid
-    if ($data && isset($data->latitude) && isset($data->longitude)) {
-        // Process the latitude and longitude data as needed
-        $latitude = $data->latitude;
-        $longitude = $data->longitude;
+use chillerlan\QRCode\QRCode;
 
-        // For example, you can save the location data to a database
-        // Replace this with your actual database handling code
-        // $pdo = new PDO('mysql:host=localhost;dbname=your_database', 'username', 'password');
-        // $stmt = $pdo->prepare('INSERT INTO locations (latitude, longitude) VALUES (:latitude, :longitude)');
-        // $stmt->execute(['latitude' => $latitude, 'longitude' => $longitude]);
+// Start session
+session_start();
 
-        // Send a response back to the client
-        http_response_code(200);
-        echo json_encode(['message' => 'Location processed successfully']);
-    } else {
-        // Invalid data, send an error response
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid data']);
-    }
+// Function to generate QR code with given data
+function generateQRCode($data) {
+    $qr = new QRCode;
+    $qr->text($data);
+    $qr->render('qr/code.png'); // Save QR code image
+}
+
+if (isset($_POST['latitude'], $_POST['longitude'], $_POST['qr_data'])) {
+    // Retrieve location data and QR code data
+    $latitude = $_POST['latitude'];
+    $longitude = $_POST['longitude'];
+    $qrData = $_POST['qr_data'];
+
+    // Generate QR code and save it
+    generateQRCode($qrData);
+
+    // Notify the owner of the lost item (this is just an example, adjust as needed)
+    $ownerNotification = "Your lost item has been found! Location: Latitude $latitude, Longitude $longitude";
+    
+    // Display owner notification (you can use this message to send an email or other notification)
+    echo $ownerNotification;
+
+    // Clear the QR data from session after processing
+    unset($_SESSION['qr_data']);
 } else {
-    // Invalid request method, send an error response
-    http_response_code(405);
-    echo json_encode(['error' => 'Method Not Allowed']);
+    // Handle invalid request
+    echo "Invalid request.";
 }
 ?>

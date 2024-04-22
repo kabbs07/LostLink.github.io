@@ -1,6 +1,6 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "test");
+$conn = mysqli_connect("localhost", "root", "", "bbcdb");
 
 if (!$conn) {
     echo "Connection Failed";
