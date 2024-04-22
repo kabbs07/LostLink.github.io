@@ -35,7 +35,7 @@
             },
             "time": "2024-02-27T14:37:26+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "chillerlan\\QRCode\\": "src/"
@@ -124,7 +124,7 @@
             },
             "time": "2024-03-02T20:07:15+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "chillerlan\\Settings\\": "src/"
@@ -209,7 +209,7 @@
             },
             "time": "2023-11-25T22:23:28+00:00",
             "type": "library",
-            "installation-source": "source",
+            "installation-source": "dist",
             "autoload": {
                 "psr-4": {
                     "PHPMailer\\PHPMailer\\": "src/"
