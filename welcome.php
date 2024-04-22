@@ -66,10 +66,10 @@
     .login-btn:hover, .register-btn:hover {
       text-decoration: none;
     }
+
   </style>
 </head>
 <body>
-  
   <div class="welcome-container">
     <div class="text-center">
       <img src="img1.png" alt="">
@@ -86,6 +86,7 @@
       exit();
     } else {
         // If not logged in, show the default message
+       
         echo '<p class="lead">Create an ad of your lost item and let your friends know</p>';
         echo '<div class="mt-4">';
         echo '<div class="mb-3">';
