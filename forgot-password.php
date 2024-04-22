@@ -227,7 +227,6 @@ if (isset($_POST['submit'])) {
                     <div class="content-wthree">
                         <h1>Forgot Password</h1>
                         <p class="p-text"> <span>Lost your password? </span>Please enter your email address. You will receive a link to create a new password via email. </p>
-                        <?php echo $msg; ?>
                         <form action="" method="post">
                             <div class="email-input">
                                 <input type="email" id="email" name="email" placeholder=" " required />
