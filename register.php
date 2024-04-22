@@ -237,7 +237,8 @@ if (!empty($msg)) {
       position: 'topCenter',
       timeout: 5000,
       transitionIn: 'fadeInDown',
-      close: true, // Include the close button inside the box
+      close: false, // Include the close button inside the box
+      closeOnClick: true,
       progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
     });";
   } else {
@@ -249,7 +250,8 @@ if (!empty($msg)) {
       position: 'topCenter',
       timeout: 5000,
       transitionIn: 'fadeInDown',
-      close: true, // Include the close button inside the box
+      close: false, // Include the close button inside the box
+      closeOnClick: true,
       progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
     });";
   }

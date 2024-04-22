@@ -67,10 +67,10 @@ if (isset($_POST['submit'])) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
             }
             echo "</div>";        
-            $msg = "<div class='alert alert-info'>We've send a verification link on your email address.</div>";
+            $msg = "<div class='alert alert-success'>We've send a verification link on your email address.</div>";
         }
     } else {
-        $msg = "<div class='alert alert-danger'>$email - This email address do not found.</div>";
+        $msg = "<div class='alert alert-error'>$email - This email address do not found.</div>";
     }
 }
 
@@ -88,6 +88,7 @@ if (isset($_POST['submit'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Actor&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
   <title>Lost Link</title>
     <style>
       .container {
@@ -245,4 +246,44 @@ if (isset($_POST['submit'])) {
     </section>
     <!-- //form section start -->
 </body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
+<script>
+<?php
+if (!empty($msg)) {
+  echo "var message = '" . addslashes($msg) . "';";
+  if (strpos($msg, 'error') !== false) {
+    // Display error message in red
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'red',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: false, // Include the close button inside the box
+      closeOnClick: true,
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  } else {
+    // Display success message in green
+    echo "iziToast.show({
+      title: '',
+      message: message,
+      color: 'green',
+      position: 'topCenter',
+      timeout: 5000,
+      transitionIn: 'fadeInDown',
+      close: false, // Include the close button inside the box
+      closeOnClick: true,
+      progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
+    });";
+  }
+}
+?>
+
+
+
+
+
+</script>
 </html>
