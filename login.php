@@ -149,7 +149,7 @@
             header("Location: admin.php"); // Redirect to admin page if user is admin
             exit(); // Exit after redirection
           } else {
-            header("Location: homepage.php"); // Redirect to homepage if user is not admin
+            header("Location: main-page.php"); // Redirect to homepage if user is not admin
             exit(); // Exit after redirection
           }
         } else {

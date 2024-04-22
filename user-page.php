@@ -226,6 +226,10 @@ if (isset($_POST['logout'])) {
   </div>
 </div>
 
+<form method="post">
+      <button type="submit" name="logout" class="">Logout</button>
+    </form>
+
 
   <div class="navbar">
     <a href="user-page.php" class="active" onclick="changeImage('user')" ><img src="fi-sr-user.png" alt="" class="left-icon" id="user-icon"></a>
