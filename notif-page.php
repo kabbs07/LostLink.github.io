@@ -72,49 +72,23 @@ if (isset($_POST['logout'])) {
 
 <body>
   <div class="container mt-5">
-    <h1>Welcome, User!</h1>
-    <form method="post">
-      <button type="submit" name="logout" class="btn btn-primary">Logout</button>
-    </form>
+    <h1>Notif page</h1>
   </div>
 
-  <!-- Navbar -->
+ 
+  <!-- Navbar-->
   <div class="navbar">
-    <a href="user-page.php" onclick="changeImage('user')" ><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>
-    <a href="main-page.php" onclick="changeImage('home')" ><img src="fi-rr-home.png" alt="" class="middle-icon" id="home-icon"></a>
-    <a href="notif-page.php" onclick="changeImage('bell')" ><img src="fi-rr-bell.png" alt="" class="right-icon" id="bell-icon"></a>
-  </div>
+  <a href="user-page.php" onclick="changeImage('user')" ><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>
+  <a href="main-page.php" onclick="changeImage('home')" ><img src="fi-rr-home.png" alt="" class="middle-icon" id="home-icon"></a>
+  <a href="notif-page.php" class="active" onclick="changeImage('bell')" ><img src="fi-sr-bell.png" alt="" class="right-icon" id="bell-icon"></a>
+</div>
+
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
-  <script>
-    function changeImage(icon) {
-      var userIcon = document.getElementById('user-icon');
-      var homeIcon = document.getElementById('home-icon');
-      var bellIcon = document.getElementById('bell-icon');
+  <script src ="change-img.js"></script>
 
-      // Reset all icons to their default
-      userIcon.src = 'fi-rr-user.png';
-      homeIcon.src = 'fi-rr-home.png';
-      bellIcon.src = 'fi-rr-bell.png';
-
-      // Change the clicked icon
-      switch (icon) {
-        case 'user':
-          userIcon.src = 'fi-sr-user.png';
-          break;
-        case 'home':
-          homeIcon.src = 'fi-sr-home.png';
-          break;
-        case 'bell':
-          bellIcon.src = 'fi-sr-bell.png';
-          break;
-        default:
-          break;
-      }
-    }
-  </script>
 </body>
 
 </html>
