@@ -1,4 +1,8 @@
 <?php
+use chillerlan\QRCode\{QRCode, QROptions};
+
+require_once 'vendor/autoload.php';
+
 session_start();
 
 // Include your database connection file (e.g., config.php)
@@ -355,6 +359,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
         if ($uploadOk == 1) {
             // Attempt to move uploaded file to target directory
             if (move_uploaded_file($_FILES["item_image"]["tmp_name"], $targetFile)) {
+                             // Configure QR code options
+                             $options = new QROptions([
+                                'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+                                'eccLevel' => QRCode::ECC_L,
+                                'imageBase64' => false, // Output as binary data
+                            ]);
+            
+                            // Initialize QR code instance with options
+                            $qrcode = new QRCode($options);
+            
+                            $itemData = "User Name: $userName\nItem Name: $itemName\nItem Description: $itemDescription\nLast Seen: $lastSeen";
+                            $completeUrl = $baseUrl . "item_data_page.php?itemData=" . urlencode($itemData);
+            
+                            // Generate QR code using the complete URL
+                            $imageData = $qrcode->render($completeUrl);
+                            // Specify the folder to store the image
+                            $qrcodeDir = 'qrcodes/';
+                            $qrcodeFileName = $qrcodeDir . 'qrcode_' . uniqid() . '.png';
+            
+                            // Save the QR code image data to a file
+                            file_put_contents($qrcodeFileName, $imageData);
+
                 // Insert data into registered_items table without specifying id
                 $sql = "INSERT INTO registered_items (user_id, user_name, item_name, item_image, item_description, last_seen)
                         VALUES ('$userId', '$userName', '$itemName', '$targetFile', '$itemDescription', '$lastSeen')";
