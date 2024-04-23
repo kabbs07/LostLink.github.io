@@ -61,6 +61,16 @@ if (isset($_POST['logout'])) {
     body {
       font-family: "Poppins", sans-serif;
     }
+    /* Hide scrollbar for webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
+
 
     /* Navbar styles */
     .navbar {
@@ -116,6 +126,7 @@ if (isset($_POST['logout'])) {
       display: flex;
       align-items: center;
     }
+
 
     /* Added margin to the left of the button */
     .button-container button {
@@ -174,6 +185,8 @@ if (isset($_POST['logout'])) {
     .added-items-box {
       background: #FFFFFF;
       margin-top: 0.2rem;
+      margin-left:0.5rem;
+      margin-right:0.5rem;
       box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
       /* Added box-shadow */
     }
@@ -184,12 +197,23 @@ if (isset($_POST['logout'])) {
       font-size: 24px;
 
     }
+    @media (max-width: 348px){
+      .view-item-btn{
+        font-size:12px;
+        padding:;
+      }
+    }
 
     .product-name {
-      color: #000;
-      font-weight: 600;
-      font-size: 24px;
-    }
+  color: #000;
+  font-weight: 600;
+  font-size: 20px;
+  width: 150px; /* Adjust width as needed */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 
     small {
       color: #333638CC;
@@ -202,60 +226,75 @@ if (isset($_POST['logout'])) {
       color: #333638CC;
     }
 
-    button {
+    a {
       font-family: "Poppins", sans-serif;
-      padding: 5px 55px 5px 55px;
+      text-decoration:underline;
       border-radius: 25px 25px;
       font-size: 13px;
       font-weight: 600;
       color: #6200EE;
+      background:none;
       border: none;
       cursor: pointer;
     }
+    /* Add this CSS at the end of your <style> block */
+.registered-items-container {
+    overflow-y: auto;
+    max-height: calc(100vh - 340px); /* Adjust the value as needed */
+    /* 260px is the estimated height of other elements on the page */
+}
+
+    
   </style>
 </head>
 
 <body>
-  <div class="container mt-5">
+
+    <div class="container mt-5">
     <!-- First Rounded box with two columns -->
     <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="rounded-box">
-          <div class="row">
-            <div class="col-md-6 button-container"> <!-- Modified column -->
-              <h1>Add an item</h1>
-              <button class="btn" onclick="goToPostingPage()"><img src="add_circle.png" alt=""></button>
+        <div class="col-md-6">
+            <div class="rounded-box">
+                <div class="row">
+                    <div class="col-md-6 button-container"> <!-- Modified column -->
+                        <h1>Add an item</h1>
+                        <button class="btn" onclick="goToPostingPage()"><img src="add_circle.png" alt=""></button>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Register the items <br> you want here</p>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-              <p>Register the items <br> you want here</p>
-            </div>
-          </div>
         </div>
-      </div>
     </div>
 
-    <!-- Second Rounded box -->
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div>
-          <h1 class="registered-items-text">Registered Items</h1>
+<!-- Second Rounded box -->
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <h1 class="registered-items-text">Registered Items</h1>
+        <!-- Wrap the container with a div and apply styles -->
+        <div class="registered-items-container">
+            <!-- Loop through each item in $itemsList -->
+            <?php foreach ($itemsList as $item): ?>
+                <div class="rounded-box added-items-box">
+                    <div class="product-detail d-flex align-items-center justify-content-between">
+                        <div class="product-info">
+                            <small><?php echo $item['posted_date']; ?></small>
+                            <h2 class="product-name"><?php echo substr($item['item_name'], 0, 15); ?></h2>
+                            <a href="view-item.php?item_id=<?php echo $item['item_id']; ?>" class="view-item-btn">View Item</a>
+                        </div>
+                        <div class="product-image">
+                            <img src="<?php echo $item['item_image']; ?>" alt="Product Image" style="width: 90px; height: 90px; object-fit: cover;">
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <!-- End of item loop -->
         </div>
-        <div class="rounded-box added-items-box">
-          <!-- Static Product Detail -->
-          <div class="product-detail d-flex align-items-center justify-content-between">
-            <div class="product-info">
-              <small>25 mins ago</small>
-              <h2 class="product-name">Lenovo Laptop</h2>
-              <button>View Item</button>
-            </div>
-            <div class="product-image">
-              <img src="frame 2.png" alt="Product Image">
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <div class="rounded-box added-items-box">
+</div>
+
+
 
 
       <div id="itemModal">
@@ -316,29 +355,10 @@ if (isset($_POST['logout'])) {
         });
       </script>
 
-      <!-- Loop through each item in $itemsList -->
-      <?php foreach ($itemsList as $item): ?>
-        <div class="product-detail d-flex align-items-center justify-content-between">
-          <div class="product-info">
-            <small><?php echo $item['posted_date']; ?></small>
-            <h2 class="product-name"><?php echo $item['item_name']; ?></h2>
-            <button id="viewItemBtn" class="view-item-btn" data-item-id="<?php echo $item['item_id']; ?>">View
-              Item</button>
-          </div>
-          <div class="product-image">
-            <img src="<?php echo $item['item_image']; ?>" alt="Product Image" style="max-width: 100%; height: auto;">
-          </div>
-        </div>
-      <?php endforeach; ?>
-      <!-- End of item loop -->
-    </div>
-  </div>
+
+  
   </div>
 
-  <form method="post">
-    <button type="submit" name="logout" class="">Logout</button>
-  </form>
-  </div>
 
   <div class="navbar">
     <a href="user-page.php" class="active" onclick="changeImage('user')"><img src="fi-sr-user.png" alt=""

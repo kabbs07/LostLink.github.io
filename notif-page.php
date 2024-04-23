@@ -73,6 +73,9 @@ if (isset($_POST['logout'])) {
 <body>
   <div class="container mt-5">
     <h1>Notif page</h1>
+    <form method="post">
+    <button type="submit" name="logout" class="">Logout</button>
+  </form>
   </div>
 
  
