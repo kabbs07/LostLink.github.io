@@ -145,6 +145,10 @@ if (isset($_GET['item_id'])) {
     #back-icon {
       margin-top: 10px;
     }
+    #more-icon {
+      margin-top: 5px;
+      margin-bottom:-1.6rem;
+    }
 
 /* CSS to control the aspect ratio of the image */
 .image-wrapper {
@@ -216,55 +220,258 @@ if (isset($_GET['item_id'])) {
       text-decoration: none;
       cursor: pointer;
     }
+    .card-title{
+      font-size:25px;
+      font-weight:bold;
+      margin-top:-0.8rem;
+      margin-bottom:1.7rem;
+      letter-spacing:0.5px;
+    }
+    .item-detail-card{
+      border:none;
+    }
+    .item-status{
+      color: #33363896;
+      font-size:11px;
+      font-weight:bold;
+
+    }
+    .item-description-title{
+      color: #33363896;
+      font-size:11.5px;
+      letter-spacing:1px;
+      font-weight:bold;
+
+
+    }
+    .item-description-text{
+      color: #33363896;
+      font-size:15px;
+      margin-top:-0.6rem;
+      margin-bottom:1.5rem;
+    }
+    .last-seen-title{
+      color: #33363896;
+      font-size:11.5px;
+      letter-spacing:1px;
+      font-weight:bold;
+    }
+    .location-icon{
+      color:#6200EE;
+      margin-right:0.5rem;
+      font-weight:900;
+    }
+    .last-seen-text{
+      color: #33363896;
+      font-size:15px;
+      margin-top:-0.6rem;
+      margin-bottom:1.5rem;
+    }
+    .user-title{
+      color: #33363896;
+      font-size:11.5px;
+      letter-spacing:1px;
+      font-weight:bold;
+    }
+    .person-icon{
+      color:#6200EE;
+      margin-right:0.5rem;
+      font-weight:900;
+    }
+    button {
+      font-family: "Poppins", sans-serif;
+      padding: 10px 55px 10px 55px;
+      font-size: 13px;
+      font-weight:bold;
+      background-color: #6200EE;
+      letter-spacing:1px;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      border-radius: 25px 25px;
+      transition: 200ms ease-in-out;
+      margin-top:1.5rem;
+    }
+    button:hover{
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+
+    }
+    .owner-name{
+      color:#33363896;
+      font-weight:bold;
+      margin-top:-0.6rem;
+      margin-bottom:-0.2rem;
+    }
+    .item-box{
+      overflow-y: auto;
+    max-height: calc(100vh - 110px); /* Adjust the value as needed */
+    /* 260px is the estimated height of other elements on the page */
+    }
+    .view-qr-link{
+      text-decoration:none;
+      color: #6200EE;
+      font-weight:bold;
+      font-size:12px;
+      text-align:center;
+    }
+    .owner-id{
+      color:#33363896;
+      font-size:11px;
+      margin-top:-0.3rem;
+    }
+    .modal-exit-btn{
+      margin:1rem;
+    }
+    .modal-item-Name{
+      margin-bottom:2rem;
+      margin-top:-2rem;
+      
+    }
+    .modal-item-Name h2{
+      font-size:15px;
+      font-weight:bold;
+      margin:auto;
+      width:80%;
+      color:#33363896;
+    }
+    .qr-img-container img{
+      width:250px;
+      height:250px;
+    }
+    .exit-btn{
+            box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    .download-qr-btn{
+      text-decoration:none;
+      color: #6200EE;
+    }
+    .text-end {
+  text-align: end;
+  }
+  /* Add CSS styles to change background color on hover and click */
+  .dropdown-item.edit-item:hover,
+  .dropdown-item.edit-item:focus,
+  .dropdown-item.edit-item:active,
+  .dropdown-item.delete-item:hover,
+  .dropdown-item.delete-item:focus,
+  .dropdown-item.delete-item:active {
+    background-color: #6200EE !important;
+    color: #fff;
+  }
+  .edit-form{
+    margin-top:2rem;
+    padding:1rem:
+  }
+
+
+   
+
   </style>
 </head>
 
 <body>
-  <a href="user-page.php"><img src="back.png" alt="" id="back-icon"></a>
-  <div class="container">
-    <div class="row justify-content-md-center">
-      <div class="col-md-6">
-        <h1>Item Details</h1>
-        <div class="card">
-          <div class="image-wrapper">
-            <!-- Image wrapped in a container with fixed aspect ratio -->
-            <img src="<?php echo $item['item_image']; ?>" class="card-img-top" alt="Item Image">
-            <!-- Edit button -->
-            <button class="btn btn-primary edit-btn">Edit</button>
-          </div>
-          <div class="card-body">
-            <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
-            <p class="card-text"><?php echo $item['item_description']; ?></p>
-            <p class="card-text"><small class="text-muted">Last seen: <?php echo $item['last_seen']; ?></small></p>
-          </div>
+<a href="user-page.php"><img src="back.png" alt="" id="back-icon"></a>
+
+<div class="container">
+  <div class="row justify-content-md-center">
+    <div class="col-md-6 item-box">
+<div class="dropdown text-end">
+  <a href="#" role="button" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+    <img src="more_vert.png" alt="" id="more-icon">
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="moreDropdown">
+    <!-- Add event listeners to open the edit and delete modals -->
+    <li><a class="dropdown-item edit-item" href="#" onclick="openEditModal()">Edit</a></li>
+    <li><a class="dropdown-item delete-item" href="#" onclick="openDeleteModal()">Delete</a></li>
+  </ul>
+</div>
+
+
+
+      <div class="card mb-1 mt-4">
+        <div class="image-wrapper">
+          <img src="<?php echo $item['item_image']; ?>" class="card-img-top" alt="Item Image">
+        </div>
+      </div>
+     <!-- Link to trigger the modal -->
+<div class="text-center">
+  <a href="#" class="view-qr-link" onclick="openModal()">View QR Code</a>
+</div>
+      <!-- Details Card -->
+      <div class="card mb-4 item-detail-card">
+        <div class="card-body">
+          <p class="item-status">Not Missing</p>
+          <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
+          <p class="item-description-title">Description</p>
+          <p class="card-text item-description-text"><?php echo $item['item_description']; ?></p>
+          <p class="last-seen-title"><img src="location_on.png" alt="" class="location-icon"></i>Last Seen</p>
+          <p class="card-text last-seen-text"></i><?php echo $item['last_seen']; ?></p>
+          <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
+          <p class="card-text owner-name">Patrick Garcia</p>
+          <p class="card-text owner-id">BT19CSE131</p>
+        </div>
+        <div class="report-btn-container text-center">
+          <button>Report Missing</button>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-<!-- Modal for editing image position and scale -->
-<div id="myModal" class="modal">
+
+<!-- QR Modal HTML -->
+<div id="qrModal" class="modal">
   <div class="modal-content">
-    <span id="close">&times;</span>
-    <h2>Edit Image</h2>
-    <!-- Controls for adjusting image position -->
-    <div class="form-group">
-      <label for="horizontalRange">Horizontal Position:</label>
-      <input type="range" id="horizontalRange" class="form-range" min="0" max="100" value="0">
+    <span id="close" onclick="closeModal()">&times;</span>
+    <!-- Here you can generate and display the QR code for the item -->
+    <div class="qr-img-container text-center ">
+    <img src="sample-qr.png" alt="QR Code" width="200">
     </div>
-    <div class="form-group">
-      <label for="verticalRange">Vertical Position:</label>
-      <input type="range" id="verticalRange" class="form-range" min="0" max="100" value="0">
+    <div class="modal-item-Name text-center">
+    <h2><?php echo $item['item_name']; ?></h2>
     </div>
-    <!-- Controls for adjusting image scale -->
-    <div class="form-group">
-      <label for="zoomRange">Zoom:</label>
-      <input type="range" id="zoomRange" class="form-range" min="50" max="200" value="100">
-    </div>
-    <!-- Save Changes button -->
-    <button id="saveChangesBtn" class="btn btn-primary">Save Changes</button>
+    <div class="modal-exit-btn text-center">
+      <a href="" class="download-qr-btn">Download QR Code</a><br>
+      <button class="exit-btn" onclick="closeModal()">Exit</button>
+  </div>
   </div>
 </div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal">
+  <div class="modal-content edit-modal text-center">
+    <!-- Edit Form -->
+    <form id="editForm" class="edit-form">
+      <!-- Add your input fields here to edit item details -->
+      <!-- For example: -->
+      <label for="itemName">Item Name:</label>
+      <input type="text" id="itemName" name="itemName" value="<?php echo $item['item_name']; ?>">
+      <!-- Add more input fields as needed -->
+      <div class="buttons-group text-center">
+      <button type="submit">Save Changes</button>
+      <button id="closeEditModal" class="close" onclick="closeEditModal()">Exit</button>
+      </div>
+      
+      
+    </form>
+  </div>
+</div>
+
+<!-- Delete Modal -->
+<div id="deleteModal" class="modal">
+  <div class="modal-content">
+    <span id="closeDeleteModal" class="close" onclick="closeDeleteModal()">&times;</span>
+    <p>Are you sure you want to delete this item?</p>
+    <div class="button-container">
+      <button onclick="deleteItem()">Yes</button>
+      <button onclick="closeDeleteModal()">No</button>
+    </div>
+  </div>
+</div>
+
+
+
+
 
 
 
@@ -282,64 +489,40 @@ if (isset($_GET['item_id'])) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.0/js/iziModal.min.js"></script>
   <script>
-  // Get the modal
-  var modal = document.getElementById("myModal");
-  // Get the image wrapper and the image element
-  var imageWrapper = document.querySelector(".image-wrapper");
-  var image = document.querySelector(".image-wrapper img");
-
-  // Get the button that opens the modal
-  var btn = document.getElementsByClassName("edit-btn")[0];
-
-  // Get the <span> element that closes the modal
-  var span = document.getElementById("close");
-
-  // When the user clicks the button, open the modal 
-  btn.onclick = function () {
+  // Function to open the modal
+  function openModal() {
+    var modal = document.getElementById("qrModal");
     modal.style.display = "block";
   }
 
-  // When the user clicks on <span> (x), close the modal
-  span.onclick = function () {
+  // Function to close the modal
+  function closeModal() {
+    var modal = document.getElementById("qrModal");
     modal.style.display = "none";
   }
-
-  // When the user clicks anywhere outside of the modal, close it
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  }
-
-// Function to update image position and scale based on range inputs
-function updateImage() {
-  var horizontalValue = document.getElementById("horizontalRange").value;
-  var verticalValue = document.getElementById("verticalRange").value;
-  var zoomValue = document.getElementById("zoomRange").value;
-
-  // Update image position
-  image.style.left = horizontalValue + "%";
-  image.style.top = verticalValue + "%";
-  
-  // Update image scale
-  image.style.transform = "scale(" + (zoomValue / 100) + ")";
+  // Function to open the edit modal
+function openEditModal() {
+  var modal = document.getElementById("editModal");
+  modal.style.display = "block";
 }
 
-// Add event listeners to range inputs to update image position and scale
-document.getElementById("horizontalRange").addEventListener("input", updateImage);
-document.getElementById("verticalRange").addEventListener("input", updateImage);
-document.getElementById("zoomRange").addEventListener("input", updateImage);
-// Function to save changes
-function saveChanges() {
-  // Close the modal
+// Function to close the edit modal
+function closeEditModal() {
+  var modal = document.getElementById("editModal");
   modal.style.display = "none";
-  
-  // Optionally, you can perform additional actions here, such as sending the updated image details to the server.
 }
 
-// Add event listener to the "Save Changes" button
-document.getElementById("saveChangesBtn").addEventListener("click", saveChanges);
+// Function to open the delete modal
+function openDeleteModal() {
+  var modal = document.getElementById("deleteModal");
+  modal.style.display = "block";
+}
 
+// Function to close the delete modal
+function closeDeleteModal() {
+  var modal = document.getElementById("deleteModal");
+  modal.style.display = "none";
+}
 
 </script>
 

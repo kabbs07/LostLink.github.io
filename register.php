@@ -205,7 +205,7 @@ if (isset($_POST['submit'])) {
           value="<?php if (isset($_POST['submit'])) {
             echo $name;
           } ?>" required>
-        <label for="name">Name</label>
+        <label for="name">Fullname</label>
       </div>
       <div class="email-input">
         <input type="email" name="email" id="email" placeholder=" "
