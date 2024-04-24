@@ -126,11 +126,6 @@ CREATE TABLE `registered_items` (
   `item_description` text NOT NULL,
   `last_seen` varchar(255) NOT NULL,
   `posted_date` timestamp NOT NULL DEFAULT current_timestamp(),
-  `horizontal_position` float DEFAULT NULL,
-  `vertical_position` float DEFAULT NULL,
-  `zoom_level` float DEFAULT NULL,
-  `qrimage` varchar(255) NOT NULL,
-  `qrtext` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
