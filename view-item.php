@@ -509,7 +509,7 @@ if ($result && mysqli_num_rows($result) == 1) {
         <h2><?php echo $item['item_name']; ?></h2>
       </div>
       <div class="modal-exit-btn text-center">
-        <a href="" class="download-qr-btn">Download QR Code</a><br>
+      <a href="<?php echo $qrcodeImagePath; ?>" download="<?php echo $qrcodeImagePath; ?>.png" class="download-qr-btn">Download QR Code</a><br> <!-- Make the QR code downloadable with the default QR code name -->
         <button class="exit-btn" onclick="closeModal()">Exit</button>
       </div>
     </div>
