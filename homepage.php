@@ -78,6 +78,43 @@ if (isset($_POST['logout'])) {
     </form>
   </div>
 
+  <?php
+// item.php
+
+// Include your database connection file (e.g., config.php)
+include 'config.php';
+
+// Check if the item ID is provided in the URL
+if (isset($_GET['item_id'])) {
+    // Get the item ID
+    $itemId = $_GET['item_id'];
+
+    // Fetch item details from the database based on the item ID
+    $sql = "SELECT * FROM registered_items WHERE id = '$itemId'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        // Display item details or perform other actions
+        // For example:
+        echo "Item Name: " . $row['item_name'];
+        echo "<br>";
+        echo "Item Description: " . $row['item_description'];
+        // Add more details as needed
+    } else {
+        // Item not found
+        echo "Item not found.";
+    }
+} else {
+    // Item ID not provided
+    echo "Item ID not provided.";
+}
+?>
+
+
+
+
+
   <!-- Navbar -->
   <div class="navbar">
     <a href="user-page.php" onclick="changeImage('user')" ><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>

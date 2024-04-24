@@ -109,6 +109,8 @@ if ($result && mysqli_num_rows($result) == 1) {
             border-radius: 25px;
             transition: 200ms ease-in-out;
             margin-top: 20px;
+            box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
+
         }
 
         button:hover {
@@ -237,10 +239,12 @@ textarea:focus{
 
         </form>
     </div>
+    
 
     <!-- Bootstrap JS and jQuery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 
     <script>
         // Function to preview selected images
@@ -288,6 +292,7 @@ textarea:focus{
         }
     </script>
 </body>
+
 <?php
 // Function to resize image
 function resizeImage($file, $width, $height, $targetFile) {

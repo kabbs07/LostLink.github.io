@@ -109,6 +109,8 @@ html {
       color: #fff;
       margin-bottom: 20px;
       margin-top: -1rem;
+      box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.3);
+
     }
 
     h1 {

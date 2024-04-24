@@ -256,6 +256,7 @@ if (isset($_GET['item_id'])) {
       <label for="verticalRange">Vertical Position:</label>
       <input type="range" id="verticalRange" class="form-range" min="0" max="100" value="0">
     </div>
+<<<<<<< Updated upstream
     <!-- Controls for adjusting image scale -->
     <div class="form-group">
       <label for="zoomRange">Zoom:</label>
@@ -263,6 +264,12 @@ if (isset($_GET['item_id'])) {
     </div>
     <!-- Save Changes button -->
     <button id="saveChangesBtn" class="btn btn-primary">Save Changes</button>
+=======
+    <div class="modal-exit-btn text-center">
+      <a href="" class="download-qr-btn" download>Download QR Code</a><br>
+      <button class="exit-btn" onclick="closeModal()">Exit</button>
+  </div>
+>>>>>>> Stashed changes
   </div>
 </div>
 
