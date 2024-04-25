@@ -61,15 +61,16 @@ if (isset($_POST['logout'])) {
     body {
       font-family: "Poppins", sans-serif;
     }
-    /* Hide scrollbar for webkit browsers (Chrome, Safari) */
-::-webkit-scrollbar {
-  display: none;
-}
 
-/* Hide scrollbar for Firefox */
-html {
-  scrollbar-width: none;
-}
+    /* Hide scrollbar for webkit browsers (Chrome, Safari) */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Hide scrollbar for Firefox */
+    html {
+      scrollbar-width: none;
+    }
 
 
     /* Navbar styles */
@@ -187,8 +188,8 @@ html {
     .added-items-box {
       background: #FFFFFF;
       margin-top: 0.2rem;
-      margin-left:0.5rem;
-      margin-right:0.5rem;
+      margin-left: 0.5rem;
+      margin-right: 0.5rem;
       box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.3);
       /* Added box-shadow */
     }
@@ -199,22 +200,24 @@ html {
       font-size: 24px;
 
     }
-    @media (max-width: 348px){
-      .view-item-btn{
-        font-size:12px;
-        padding:;
+
+    @media (max-width: 348px) {
+      .view-item-btn {
+        font-size: 12px;
+        padding: ;
       }
     }
 
     .product-name {
-  color: #000;
-  font-weight: 600;
-  font-size: 20px;
-  width: 150px; /* Adjust width as needed */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
+      color: #000;
+      font-weight: 600;
+      font-size: 20px;
+      width: 150px;
+      /* Adjust width as needed */
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
 
     small {
@@ -230,135 +233,146 @@ html {
 
     a {
       font-family: "Poppins", sans-serif;
-      text-decoration:underline;
+      text-decoration: underline;
       border-radius: 25px 25px;
       font-size: 13px;
       font-weight: 600;
       color: #6200EE;
-      background:none;
+      background: none;
       border: none;
       cursor: pointer;
     }
-    /* Add this CSS at the end of your <style> block */
-.registered-items-container {
-    overflow-y: auto;
-    max-height: calc(100vh - 340px); /* Adjust the value as needed */
-    /* 260px is the estimated height of other elements on the page */
-}
 
-    
+    /* Add this CSS at the end of your <style> block */
+    .registered-items-container {
+      overflow-y: auto;
+      max-height: calc(100vh - 340px);
+      /* Adjust the value as needed */
+      /* 260px is the estimated height of other elements on the page */
+    }
   </style>
 </head>
 
 <body>
 
-    <div class="container mt-5">
+  <div class="container mt-5">
     <!-- First Rounded box with two columns -->
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="rounded-box">
-                <div class="row">
-                    <div class="col-md-6 button-container"> <!-- Modified column -->
-                        <h1>Add an item</h1>
-                        <button class="btn" onclick="goToPostingPage()"><img src="add_circle.png" alt=""></button>
-                    </div>
-                    <div class="col-md-6">
-                        <p>Register the items <br> you want here</p>
-                    </div>
-                </div>
+      <div class="col-md-6">
+        <div class="rounded-box">
+          <div class="row">
+            <div class="col-md-6 button-container"> <!-- Modified column -->
+              <h1>Add an item</h1>
+              <button class="btn" onclick="goToPostingPage()"><img src="add_circle.png" alt=""></button>
             </div>
+            <div class="col-md-6">
+              <p>Register the items <br> you want here</p>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
 
-<!-- Second Rounded box -->
-<div class="row justify-content-center">
-    <div class="col-md-6">
+    <!-- Second Rounded box -->
+    <div class="row justify-content-center">
+      <div class="col-md-6">
         <h1 class="registered-items-text">Registered Items</h1>
         <!-- Wrap the container with a div and apply styles -->
         <div class="registered-items-container">
-            <!-- Loop through each item in $itemsList -->
-            <?php foreach ($itemsList as $item): ?>
-                <div class="rounded-box added-items-box">
-                    <div class="product-detail d-flex align-items-center justify-content-between">
-                        <div class="product-info">
-                            <small><?php echo $item['posted_date']; ?></small>
-                            <h2 class="product-name"><?php echo substr($item['item_name'], 0, 15); ?></h2>
-                            <a href="view-item.php?item_id=<?php echo $item['item_id']; ?>" class="view-item-btn">View Item</a>
-                        </div>
-                        <div class="product-image">
-                            <img src="<?php echo $item['item_image']; ?>" alt="Product Image" style="width: 90px; height: 90px; object-fit: cover;">
-                        </div>
-                    </div>
+          <!-- Loop through each item in $itemsList -->
+          <?php foreach ($itemsList as $item): ?>
+            <div class="rounded-box added-items-box">
+              <div class="product-detail d-flex align-items-center justify-content-between">
+                <div class="product-info">
+                  <small><?php echo $item['posted_date']; ?></small>
+                  <h2 class="product-name"><?php echo substr($item['item_name'], 0, 15); ?></h2>
+                  <a href="view-item.php?item_id=<?php echo $item['item_id']; ?>" class="view-item-btn">View Item</a>
                 </div>
-            <?php endforeach; ?>
-            <!-- End of item loop -->
-        </div>
-    </div>
-</div>
+                <div class="product-image">
+                  <?php
+                  // Split the item images by comma
+                  $images = explode(',', $item['item_image']);
+                  if (!empty($images)) {
+                    // Output only the first image
+                    echo '<img src="' . $images[0] . '" alt="Product Image" style="width: 90px; height: 90px; object-fit: cover;">';
+                  } else {
+                    // Handle case where no image is available
+                    echo 'No Image Available';
+                  }
+                  ?>
+                </div>
 
-
-
-
-      <div id="itemModal">
-        <div id="modalContent">
-          <h2 id="modalUserName"></h2>
-          <h2 id="modalItemName"></h2>
-          <img id="modalItemImage" src="" alt="Product Image">
-          <h2 id="modalItemDescription"></h2>
-          <h2 id="modalLastSeen"></h2>
-          <h2 id="modalPostedDate"></h2>
+              </div>
+            </div>
+          <?php endforeach; ?>
+          <!-- End of item loop -->
         </div>
       </div>
+    </div>
 
-      <script>
-        $(document).ready(function () {
-          // Initialize iziModal
-          $("#itemModal").iziModal({
-            headerColor: '#6200EA', // Optional: customize header color
-            width: 600, // Optional: set modal width
-            padding: 20 // Optional: adjust padding
-          });
 
-          // Add event listener to View Item buttons
-          $(".view-item-btn").click(function () {
-            // Get the item ID
-            var itemId = $(this).data('item-id');
 
-            // AJAX request to fetch item details
-            $.ajax({
-              url: 'fetch_item_details.php',
-              type: 'POST',
-              data: { item_id: itemId },
-              dataType: 'json',
-              success: function (response) {
-                if (response.success) {
-                  // Populate modal with item details
-                  $("#modalUserName").text(response.item.user_name);
-                  $("#modalItemName").text(response.item.item_name);
-                  $("#modalItemImage").attr('src', response.item.item_image);
-                  $("#modalItemDescription").text(response.item.item_description);
-                  $("#modalLastSeen").text(response.item.last_seen);
-                  $("#modalPostedDate").text(response.item.posted_date);
 
-                  // Open the modal
-                  $("#itemModal").iziModal('open');
-                } else {
-                  // Show error message if item not found or invalid ID
-                  console.error(response.message);
-                  // You can add code here to show an error message to the user
-                }
-              },
-              error: function (xhr, status, error) {
-                console.error(error);
-                // You can add code here to handle AJAX errors
+    <div id="itemModal">
+      <div id="modalContent">
+        <h2 id="modalUserName"></h2>
+        <h2 id="modalItemName"></h2>
+        <img id="modalItemImage" src="" alt="Product Image">
+        <h2 id="modalItemDescription"></h2>
+        <h2 id="modalLastSeen"></h2>
+        <h2 id="modalPostedDate"></h2>
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Initialize iziModal
+        $("#itemModal").iziModal({
+          headerColor: '#6200EA', // Optional: customize header color
+          width: 600, // Optional: set modal width
+          padding: 20 // Optional: adjust padding
+        });
+
+        // Add event listener to View Item buttons
+        $(".view-item-btn").click(function () {
+          // Get the item ID
+          var itemId = $(this).data('item-id');
+
+          // AJAX request to fetch item details
+          $.ajax({
+            url: 'fetch_item_details.php',
+            type: 'POST',
+            data: { item_id: itemId },
+            dataType: 'json',
+            success: function (response) {
+              if (response.success) {
+                // Populate modal with item details
+                $("#modalUserName").text(response.item.user_name);
+                $("#modalItemName").text(response.item.item_name);
+                $("#modalItemImage").attr('src', response.item.item_image);
+                $("#modalItemDescription").text(response.item.item_description);
+                $("#modalLastSeen").text(response.item.last_seen);
+                $("#modalPostedDate").text(response.item.posted_date);
+
+                // Open the modal
+                $("#itemModal").iziModal('open');
+              } else {
+                // Show error message if item not found or invalid ID
+                console.error(response.message);
+                // You can add code here to show an error message to the user
               }
-            });
+            },
+            error: function (xhr, status, error) {
+              console.error(error);
+              // You can add code here to handle AJAX errors
+            }
           });
         });
-      </script>
+      });
+    </script>
 
 
-  
+
   </div>
 
 
