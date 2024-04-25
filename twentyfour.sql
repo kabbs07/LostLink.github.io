@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 24, 2024 at 04:26 PM
+-- Generation Time: Apr 24, 2024 at 04:31 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -125,21 +125,21 @@ CREATE TABLE `registered_items` (
   `item_image` varchar(255) NOT NULL,
   `item_description` text NOT NULL,
   `last_seen` varchar(255) NOT NULL,
-  `posted_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `posted_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `registered_items`
 --
 
-INSERT INTO `registered_items` (`item_id`, `user_id`, `user_name`, `item_name`, `item_image`, `item_description`, `last_seen`, `posted_date`, `horizontal_position`, `vertical_position`, `zoom_level`, `qrimage`, `qrtext`) VALUES
-(69, 56, 'jose', 'asdas', 'uploads/662913ef0852f_peep-32.png', 'asdas', 'dasdas', '2024-04-24 14:15:11', NULL, NULL, NULL, '', ''),
-(70, 56, 'jose', 'asdasddsgdf', 'uploads/66291405106aa_Frame 2.png', 'gdgdfgd', 'gfdgdf', '2024-04-24 14:15:33', NULL, NULL, NULL, '', ''),
-(71, 56, 'jose', 'ffghgfddgf', 'uploads/6629140f9ba70_Frame 22.png', 'gfdhdfghgdf', 'hdfghdfghdfg', '2024-04-24 14:15:43', NULL, NULL, NULL, '', ''),
-(72, 56, 'jose', 'sdgdfsgsdf', 'uploads/662914194aebb_img3.png', 'sdfgsdgdsfgg', 'dgsdgdfs', '2024-04-24 14:15:53', NULL, NULL, NULL, '', ''),
-(73, 56, 'jose', 'fasfasdfcvxbvxcvb', 'uploads/66291425e0b6a_sample-qr.png', 'cvbbxcvb', 'cvbvxcvb', '2024-04-24 14:16:05', NULL, NULL, NULL, '', ''),
-(74, 56, 'jose', 'dadas', 'uploads/6629147d5bd7e_upload.png', 'asdasd', 'dsadasda', '2024-04-24 14:17:33', NULL, NULL, NULL, '', ''),
-(75, 56, 'jose', 'Lenovo Laptop', 'uploads/662914c85395f_1318325.png', 'dasdas', 'asdas', '2024-04-24 14:18:48', NULL, NULL, NULL, '', '');
+INSERT INTO `registered_items` (`item_id`, `user_id`, `user_name`, `item_name`, `item_image`, `item_description`, `last_seen`, `posted_date`) VALUES
+(69, 56, 'jose', 'asdas', 'uploads/662913ef0852f_peep-32.png', 'asdas', 'dasdas', '2024-04-24 14:15:11'),
+(70, 56, 'jose', 'asdasddsgdf', 'uploads/66291405106aa_Frame 2.png', 'gdgdfgd', 'gfdgdf', '2024-04-24 14:15:33'),
+(71, 56, 'jose', 'ffghgfddgf', 'uploads/6629140f9ba70_Frame 22.png', 'gfdhdfghgdf', 'hdfghdfghdfg', '2024-04-24 14:15:43'),
+(72, 56, 'jose', 'sdgdfsgsdf', 'uploads/662914194aebb_img3.png', 'sdfgsdgdsfgg', 'dgsdgdfs', '2024-04-24 14:15:53'),
+(73, 56, 'jose', 'fasfasdfcvxbvxcvb', 'uploads/66291425e0b6a_sample-qr.png', 'cvbbxcvb', 'cvbvxcvb', '2024-04-24 14:16:05'),
+(74, 56, 'jose', 'dadas', 'uploads/6629147d5bd7e_upload.png', 'asdasd', 'dsadasda', '2024-04-24 14:17:33'),
+(75, 56, 'jose', 'Lenovo Laptop', 'uploads/662914c85395f_1318325.png', 'dasdas', 'asdas', '2024-04-24 14:18:48');
 
 -- --------------------------------------------------------
 
