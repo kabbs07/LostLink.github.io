@@ -735,7 +735,7 @@ function saveChanges() {
       // Check if update was successful
       if (response == "success") {
         // Redirect to user page or perform any other action as needed
-        window.location.href = "user-page.php";
+        location.reload();
       } else {
         // Handle error
         alert("Failed to update item details. Please try again.");
