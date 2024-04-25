@@ -39,6 +39,7 @@ if ($result && mysqli_num_rows($result) == 1) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/css/iziToast.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 
     <title>Posting Page</title>
@@ -169,12 +170,6 @@ if ($result && mysqli_num_rows($result) == 1) {
         color: #6200EE;
     }
 
-    .upload-text {
-        color: #6200EE;
-        font-weight: 600;
-        font-size: 13px;
-    }
-
     span {
         color: red;
         font-weight: 400;
@@ -183,6 +178,7 @@ if ($result && mysqli_num_rows($result) == 1) {
     .form-label {
         font-family: "Poppins", sans-serif;
         font-size: 13px;
+        color:#333636;
     }
 
     input:focus {
@@ -224,6 +220,50 @@ if ($result && mysqli_num_rows($result) == 1) {
         box-shadow: 0 0 0 0.2rem rgba(98, 0, 238, 0.25);
         /* Custom box shadow on focus */
     }
+    .upload-text{
+        color: #6200EE;
+        font-weight: 600;
+        font-size: 13px;
+        text-align:center;
+        margin-top:1rem;
+    }
+    .button-qr{
+        text-align:center;
+    }
+    .textarea-container{
+        margin-right:1rem;
+    }
+    .modal-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px; /* Adjust the height as needed */
+}
+
+.modal-body img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+.ok-btn{
+    font-family: "Poppins", sans-serif;
+    font-weight:bold;
+    font-size:17px;
+}
+.modal-footer.text-center.align-items-center.justify-content-center {
+    display: flex;
+    justify-content: center;
+}
+.check-text h1{
+    font-family: "Poppins", sans-serif;
+    font-weight:bold;
+    color: #416D19;
+
+}
+
+
+
 </style>
 </head>
 
@@ -232,23 +272,25 @@ if ($result && mysqli_num_rows($result) == 1) {
     <div class="container mt-5">
         <form method="post" enctype="multipart/form-data">
             <!-- List group for preview images -->
-
             <div class="mb-3">
                 <label for="item_name" class="form-label">Item Name:</label>
                 <input type="text" class="form-control" id="item_name" name="item_name" required>
             </div>
-            <div class="mb-3">
+            <br>
+            <div class="mb-3 textarea-container">
                 <label for="item_description" class="form-label">Item Description:</label>
-                <textarea class="form-control" id="item_description" name="item_description" rows="4"
+                <textarea class="form-control " id="item_description" name="item_description" rows="4"
                     required></textarea>
             </div>
+            <br>
             <div class="mb-3">
                 <label for="last_seen" class="form-label">Last Seen:</label>
                 <input type="text" class="form-control" id="last_seen" name="last_seen" required>
             </div>
-            <div class="mb-3 text-center">
-                <label for="item_image" class="form-label upload-text">
-                    <i class="fas fa-upload me-2"></i> Add photo from library <br>
+            <div class="mb-3">
+                <label for="item_image" class="upload-text">
+                    <i class="fas fa-upload me-2"></i>Upload images from you library<br>
+                    <small class="text-center" style= "color:red;">(Maximum of 3 Images)</small>
                 </label>
                 <input type="file" class="form-control visually-hidden" id="item_image" name="item_image[]"
                     accept="image/*" onchange="previewImage(event)" required multiple>
@@ -257,9 +299,27 @@ if ($result && mysqli_num_rows($result) == 1) {
             <div class="preview-imgs-container">
                 <div class="preview-images list-group"></div>
             </div>
-            <div class="text-center">
-                <button type="submit" name="submit" class="">Generate QR Code</button>
+            <div class="button-qr">
+                <button type="submit" name="submit"  data-bs-toggle="modal" data-bs-target="#exampleModal">Generate QR Code</button>
             </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-bottom">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="check-upload.gif" alt="">
+            </div>
+            <div class="check-text text-center">
+                <h1>You have successfully registered your itme!</h1>
+        </div>
+            <div class="modal-footer text-center align-items-center justify-content-center">
+                <button type="button" class="ok-btn" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
         </form>
     </div>
@@ -309,25 +369,36 @@ if ($result && mysqli_num_rows($result) == 1) {
                 previewContainer.appendChild(previewImage);
             }
         }
-         // Function to toggle upload label visibility
-    function toggleUploadLabel() {
-        var uploadLabel = document.getElementById('uploadLabel');
-        var fileInput = document.getElementById('item_image');
+        function toggleUploadLabel() {
+    var fileInput = document.getElementById('item_image');
 
-        if (fileInput.files.length > 3) {
-            uploadLabel.style.display = 'block';
-        } else {
-            uploadLabel.style.display = 'none';
-        }
+    if (!fileInput) {
+        console.error("File input not found.");
+        return;
     }
+
+    var uploadLabel = document.querySelector('label[for=item_image]');
+
+    if (!uploadLabel) {
+        console.error("Upload label not found.");
+        return;
+    }
+
+    if (fileInput.files.length > 3) {
+        uploadLabel.style.display = 'block';
+    } else {
+        uploadLabel.style.display = 'none';
+    }
+}
+
 
     // Add event listener to file input
     document.getElementById('item_image').addEventListener('change', toggleUploadLabel);
+    
 
     </script>
 </body>
 <?php
-// Function to resize image
 // Function to resize image
 function resizeImage($file, $width, $height, $targetFile)
 {
@@ -356,6 +427,7 @@ function resizeImage($file, $width, $height, $targetFile)
     imagedestroy($tmp);
     return $targetFile;
 }
+
 // Handle form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Validate and sanitize inputs
@@ -374,28 +446,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $targetFile = $uploadDir . $imageFileName;
 
 
-            // Check if file size exceeds limit (500KB)
-            if ($_FILES['item_image']['size'][$key] > 500000) {
-                echo "<script>alert('File size exceeds the limit.');</script>";
+          // Check if file size exceeds the limit (500KB)
+          if ($_FILES['item_image']['size'][$key] > 500000) {
+            // Resize the image to a smaller size
+            $resizedTargetFile = resizeImage($_FILES['item_image']['tmp_name'][$key], 800, 600, $uploadDir . $imageFileName);
+            if ($resizedTargetFile) {
+                $uploadedImages[] = $resizedTargetFile; // Store the resized file path
+            } else {
+                echo "<script>alert('Error resizing file.');</script>";
                 continue; // Skip this file
             }
-
-            $imageFileType = strtolower(pathinfo($targetFile, PATHINFO_EXTENSION));
-            $allowedExtensions = array("jpg", "jpeg", "png", "gif");
-
-            // Check if file format is allowed
-            if (!in_array($imageFileType, $allowedExtensions)) {
-                echo "<script>alert('Only JPG, JPEG, PNG, and GIF files are allowed.');</script>";
-                continue; // Skip this file
-            }
-
-            // Move uploaded file to target directory
+        } else {
+            // Move uploaded file to target directory without resizing
             if (move_uploaded_file($_FILES['item_image']['tmp_name'][$key], $targetFile)) {
                 $uploadedImages[] = $targetFile; // Store the file path
             } else {
                 echo "<script>alert('Error uploading file.');</script>";
             }
         }
+    }
 
         if (!empty($uploadedImages)) {
 

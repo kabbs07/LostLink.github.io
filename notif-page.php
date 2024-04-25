@@ -78,7 +78,6 @@ if (isset($_POST['logout'])) {
   </form>
   </div>
 
- 
   <!-- Navbar-->
   <div class="navbar">
   <a href="user-page.php" onclick="changeImage('user')" ><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>

@@ -29,6 +29,7 @@ if (isset($_GET['item_id'])) {
   header("Location: user-page.php");
   exit();
 }
+
 // Fetch user details from the database based on the logged-in email
 $email = $_SESSION['SESSION_EMAIL'];
 $sql = "SELECT * FROM users WHERE email='$email'";
@@ -360,22 +361,24 @@ if ($result && mysqli_num_rows($result) == 1) {
     }
 
     .modal-item-Name {
-      margin-bottom: 2rem;
-      margin-top: -2rem;
+  margin-bottom: 2rem;
+  margin-top: -0.5rem; 
+  overflow-wrap: break-word; /* Allow long words to break and wrap */
+}
 
-    }
+.modal-item-Name h2 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-left:0.7rem;
+  margin-right:0.7rem;
+  color: #33363896;
+}
 
-    .modal-item-Name h2 {
-      font-size: 15px;
-      font-weight: bold;
-      margin: auto;
-      width: 80%;
-      color: #33363896;
-    }
 
     .qr-img-container img {
       width: 250px;
       height: 250px;
+      margin-top:1rem
     }
 
     .exit-btn {
@@ -406,6 +409,57 @@ if ($result && mysqli_num_rows($result) == 1) {
       margin-top: 2rem;
       padding: 1rem:
     }
+    #closeEditModal{
+      font-size:25px;
+    }
+    /* Center the "Save changes" button */
+.modal-footer button {
+  margin: 0 auto; /* Center the button horizontally */
+}
+  /* Define the custom focus ring color */
+  .form-control:focus {
+    outline: none !important;
+        box-shadow: none !important;
+        border-color: #6200EE;
+
+  }
+  .no-btn{
+    padding:10px 50px 10px 50px;
+    font-weight:bold;
+    border-radius:25px 25px;
+    color:white;
+    margin:0.5rem;
+
+
+  }
+  .yes-btn{
+    color:white;
+    background-color:#6200EE;
+    padding:10px 50px 10px 50px;
+    font-weight:bold;
+    border-radius:25px 25px;
+    margin:0.5rem;
+
+  }
+
+  
+  .delete-p{
+    font-family: "Poppins", sans-serif;
+    color:black;
+    font-size:12px;
+    color: #33363896;
+  }
+ 
+  @media (max-width: 368px){
+    .btn-secondary{
+    font-size:11px;
+  }
+  .btn-danger{
+    font-size:11px;
+  }
+  }
+
+
   </style>
 </head>
 
@@ -446,11 +500,11 @@ if ($result && mysqli_num_rows($result) == 1) {
       ?>
     </div>
     <!-- Previous and Next buttons -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev visually-hidden" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+    <button class="carousel-control-next visually-hidden" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>
@@ -475,18 +529,80 @@ if ($result && mysqli_num_rows($result) == 1) {
             <p class="card-text owner-id">BT19CSE131</p>
           </div>
           <div class="report-btn-container text-center">
-            <button>Report Missing</button>
+            <button class="report-missing-btn">Report Missing</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- edit modal -->
+  <div class="modal" id="editModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-bottom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Edit Item Details</b></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=closeEditModal()></button>
+      </div>
+      <div class="modal-body">
+        <!-- Input fields for editing item details -->
+        <div class="mb-3">
+          <label for="itemName" class="form-label">Item Name</label>
+          <input type="text" class="form-control" id="itemName" value="<?php echo $item['item_name']; ?>">
+        </div>
+        <div class="mb-3">
+          <label for="itemDescription" class="form-label">Item Description</label>
+          <textarea class="form-control" id="itemDescription" rows="3"><?php echo $item['item_description']; ?></textarea>
+        </div>
+        <div class="mb-3">
+          <label for="lastSeen" class="form-label">Item Name</label>
+          <input type="text" class="form-control" id="lastSeen" value="<?php echo $item['last_seen']; ?>">
+        </div>
+      </div>
+      <div class="modal-footer text-center">
+    <button type="button" class="save-changes-btn" id="saveChangesBtn">Save changes</button>
+</div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- Delete Modal -->
+<div class="modal" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-bottom">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="text-center">
+          <h5>Are you sure? </h5>
+          <p class="delete-p">Do you really want to delete this item? This process cannot be undone.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn yes-btn btn-secondary" onclick="deleteItem()">Yes</button>
+        <button type="button" class="btn no-btn btn-danger" onclick="closeDeleteModal()">No</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+  <div id="deleteModal" class="modal">
+    <div class="modal-content">
+      <span id="closeDeleteModal" class="close" onclick="closeDeleteModal()">&times;</span>
+      <p>Are you sure you want to delete this item?</p>
+      <div class="button-container">
+        <button onclick="deleteItem()">Yes</button>
+        <button onclick="closeDeleteModal()">No</button>
+      </div>
+    </div>
+  </div>
 
   <!-- QR Modal HTML -->
   <div id="qrModal" class="modal">
     <div class="modal-content">
-      <span id="close" onclick="closeModal()">&times;</span>
+      <span class="text-end" id="close" onclick="closeModal()">&times;</span>
       <!-- Display the dynamically generated QR code image -->
       <div class="qr-img-container text-center">
         <?php
@@ -515,37 +631,9 @@ if ($result && mysqli_num_rows($result) == 1) {
     </div>
   </div>
 
-  <!-- Edit Modal -->
-  <div id="editModal" class="modal">
-    <div class="modal-content edit-modal text-center">
-      <!-- Edit Form -->
-      <form id="editForm" class="edit-form">
-        <!-- Add your input fields here to edit item details -->
-        <!-- For example: -->
-        <label for="itemName">Item Name:</label>
-        <input type="text" id="itemName" name="itemName" value="<?php echo $item['item_name']; ?>">
-        <!-- Add more input fields as needed -->
-        <div class="buttons-group text-center">
-          <button type="submit">Save Changes</button>
-          <button id="closeEditModal" class="close" onclick="closeEditModal()">Exit</button>
-        </div>
 
 
-      </form>
-    </div>
-  </div>
 
-  <!-- Delete Modal -->
-  <div id="deleteModal" class="modal">
-    <div class="modal-content">
-      <span id="closeDeleteModal" class="close" onclick="closeDeleteModal()">&times;</span>
-      <p>Are you sure you want to delete this item?</p>
-      <div class="button-container">
-        <button onclick="deleteItem()">Yes</button>
-        <button onclick="closeDeleteModal()">No</button>
-      </div>
-    </div>
-  </div>
 
 
 
@@ -601,6 +689,63 @@ if ($result && mysqli_num_rows($result) == 1) {
       var modal = document.getElementById("deleteModal");
       modal.style.display = "none";
     }
+
+     // Function to handle the delete operation
+     function deleteItem() {
+      // Get the item ID
+      var itemId = "<?php echo $itemId; ?>";
+
+      // Send an AJAX request to delete_item.php
+      $.ajax({
+        url: "delete_item.php",
+        type: "POST",
+        data: { item_id: itemId },
+        success: function(response) {
+          // Check if deletion was successful
+          if (response == "success") {
+            // Redirect to user page or perform any other action as needed
+            window.location.href = "user-page.php";
+          } else {
+            // Handle error
+            alert("Failed to delete item. Please try again.");
+          }
+        }
+      });
+    }
+
+    // Function to handle saving changes to item details
+function saveChanges() {
+  // Get the updated values from the input fields
+  var itemName = document.getElementById("itemName").value;
+  var itemDescription = document.getElementById("itemDescription").value;
+  var lastSeen = document.getElementById("lastSeen").value;
+  var itemId = "<?php echo $itemId; ?>"; // Get the item ID
+
+  // Send an AJAX request to update_item.php
+  $.ajax({
+    url: "update_item.php",
+    type: "POST",
+    data: {
+      item_id: itemId,
+      item_name: itemName,
+      item_description: itemDescription,
+      last_seen: lastSeen
+    },
+    success: function(response) {
+      // Check if update was successful
+      if (response == "success") {
+        // Redirect to user page or perform any other action as needed
+        window.location.href = "user-page.php";
+      } else {
+        // Handle error
+        alert("Failed to update item details. Please try again.");
+      }
+    }
+  });
+}
+
+// Add event listener to the "Save Changes" button
+document.getElementById("saveChangesBtn").addEventListener("click", saveChanges);
 
   </script>
 
