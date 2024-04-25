@@ -1,7 +1,8 @@
 <?php
 
-// Define the base URL constant
-define('BASE_URL', 'http://localhost/LostLink.github.io/');
+if (!defined('BASE_URL')) {
+    define('BASE_URL', 'http://localhost/LostLink.github.io/');
+}
 
 // Database connection configuration
 $host = 'localhost';
@@ -16,5 +17,6 @@ if (!$conn) {
     echo "Connection Failed";
     exit(); // Exit if connection fails
 }
+
 
 ?>
