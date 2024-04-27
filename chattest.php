@@ -104,9 +104,7 @@ function formatDate($timestamp) {
 
             $query = "INSERT INTO tbl_chat (name, message) VALUES ('$name','$message')";
             $run = $conn->query($query);
-            if ($run) {
-                echo "<embed loop='false' src='discord-notification.mp3' hidden='true' autoplay='true'/>";
-            }
+           
         }
         ?>
     </div>
