@@ -1,19 +1,20 @@
-<?php
+<?php 
 
+# server name
+$sName = "localhost";
+# user name
+$uName = "root";
+# password
+$pass = "";
 
-// Database connection configuration
-$host = 'localhost';
-$username = 'root';
-$password = '';
-$database = 'chat_app_db';
+# database name
+$db_name = "bbcdb";
 
-// Create a connection to the database
-$conn = mysqli_connect($host, $username, $password, $database);
-
-if (!$conn) {
-    echo "Connection Failed";
-    exit(); // Exit if connection fails
+#creating database connection
+try {
+    $conn = new PDO("mysql:host=$sName;dbname=$db_name", 
+                    $uName, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+}catch(PDOException $e){
+  echo "Connection failed : ". $e->getMessage();
 }
-
-
-

@@ -2,7 +2,7 @@
 session_start();
 include 'config.php';
 // Check if user is not logged in, redirect to login page
-if (!isset($_SESSION['SESSION_EMAIL'])) {
+if (!isset($_SESSION['SESSION_EMAIL']))  {
   header("Location: login.php");
   exit();
 }

@@ -22,11 +22,10 @@ if (isset($_SESSION['username'])) {
 	       chats (from_id, to_id, message) 
 	       VALUES (?, ?, ?)";
 	$stmt = $conn->prepare($sql);
-	$stmt->bind_param("iis", $from_id, $to_id, $message);
-	$res  = $stmt->execute();
+	$res  = $stmt->execute([$from_id, $to_id, $message]);
     
     # if the message inserted
-    if ($conn->affected_rows > 0) {
+    if ($res) {
     	/**
        check if this is the first
        conversation between them
@@ -35,10 +34,7 @@ if (isset($_SESSION['username'])) {
                WHERE (user_1=? AND user_2=?)
                OR    (user_2=? AND user_1=?)";
        $stmt2 = $conn->prepare($sql2);
-	   $stmt2->bind_param("iiii", $from_id, $to_id, $from_id, $to_id);
-	   $stmt2->execute();
-
-	   $result = $stmt2->get_result();
+	   $stmt2->execute([$from_id, $to_id, $from_id, $to_id]);
 
 	    // setting up the time Zone
 		// It Depends on your location or your P.c settings
@@ -47,14 +43,13 @@ if (isset($_SESSION['username'])) {
 
 		$time = date("h:i:s a");
 
-		if ($result->num_rows == 0 ) {
+		if ($stmt2->rowCount() == 0 ) {
 			# insert them into conversations table 
 			$sql3 = "INSERT INTO 
 			         conversations(user_1, user_2)
 			         VALUES (?,?)";
 			$stmt3 = $conn->prepare($sql3); 
-			$stmt3->bind_param("ii", $from_id, $to_id);
-			$stmt3->execute();
+			$stmt3->execute([$from_id, $to_id]);
 		}
 		?>
 
@@ -71,4 +66,3 @@ if (isset($_SESSION['username'])) {
 	header("Location: ../../index.php");
 	exit;
 }
-?>

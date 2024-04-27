@@ -7,16 +7,14 @@ function getChats($id_1, $id_2, $conn){
            OR    (to_id=? AND from_id=?)
            ORDER BY chat_id ASC";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iiii", $id_1, $id_2, $id_1, $id_2);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $stmt->execute([$id_1, $id_2, $id_1, $id_2]);
 
-    if ($result->num_rows > 0) {
-        $chats = $result->fetch_all(MYSQLI_ASSOC);
-        return $chats;
-    } else {
-        $chats = [];
-        return $chats;
+    if ($stmt->rowCount() > 0) {
+    	$chats = $stmt->fetchAll();
+    	return $chats;
+    }else {
+    	$chats = [];
+    	return $chats;
     }
+
 }
-?>
