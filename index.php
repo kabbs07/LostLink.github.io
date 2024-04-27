@@ -4,7 +4,7 @@ session_start();
 // Check if user is logged in
 if (isset($_SESSION['SESSION_EMAIL'])) {
   // User is logged in, redirect to homepage
-  header("Location: homepage.php");
+  header("Location: user-page.php");
   exit(); // Make sure to stop script execution after redirection
 }
 ?>

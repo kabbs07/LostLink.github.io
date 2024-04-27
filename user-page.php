@@ -24,7 +24,7 @@ if ($result && mysqli_num_rows($result) == 1) {
 }
 
 // Get registered items from the database
-$itemsSql = "SELECT * FROM registered_items WHERE user_id='{$row['id']}' ORDER BY posted_date DESC";
+$itemsSql = "SELECT * FROM registered_items WHERE user_id='{$row['user_id']}' ORDER BY posted_date DESC";
 $itemsResult = mysqli_query($conn, $itemsSql);
 $itemsList = [];
 if ($itemsResult && mysqli_num_rows($itemsResult) > 0) {
@@ -381,7 +381,7 @@ if (isset($_POST['logout'])) {
         class="left-icon" id="user-icon"></a>
     <a href="main-page.php" onclick="changeImage('home')"><img src="fi-rr-home.png" alt="" class="middle-icon"
         id="home-icon"></a>
-    <a href="notif-page.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
+    <a href="home.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
         id="bell-icon"></a>
   </div>
 

@@ -19,7 +19,7 @@ include 'config.php';
 $msg = "";
 
 if (isset($_POST['submit'])) {
-  $name = mysqli_real_escape_string($conn, $_POST['name']);
+  $name = mysqli_real_escape_string($conn, $_POST['name'],);
   $email = mysqli_real_escape_string($conn, $_POST['email']);
   $password = mysqli_real_escape_string($conn, md5($_POST['password']));
   $confirm_password = mysqli_real_escape_string($conn, md5($_POST['confirm-password']));
@@ -31,7 +31,7 @@ if (isset($_POST['submit'])) {
   } else {
     if ($password === $confirm_password) {
       // Use $hashed_password in your SQL query
-      $sql = "INSERT INTO users (name, email, password, code, is_admin) VALUES ('{$name}', '{$email}', '{$hashed_password}', '{$code}', 0)";
+      $sql = "INSERT INTO users (name,username, email, password, code, is_admin) VALUES ('{$name}', '{$name}','{$email}', '{$hashed_password}', '{$code}', 0)";
       $result = mysqli_query($conn, $sql);
 
       if ($result) {

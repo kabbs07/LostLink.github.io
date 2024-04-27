@@ -1,3 +1,48 @@
+<?php
+session_start();
+
+if (isset($_SESSION['SESSION_EMAIL'])) {
+    header("Location: main-page.php"); // Redirect if already logged in
+    exit();
+}
+
+include 'config.php'; // Assuming this file contains your database connection code
+
+$msg = ""; // Initialize the message variable
+
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $password = mysqli_real_escape_string($conn, md5($_POST['password']));
+
+    $sql = "SELECT * FROM users WHERE email='{$email}' AND password='{$password}'";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+
+        if (strpos($row['code'], '') !== false) {
+            $_SESSION['SESSION_EMAIL'] = $email;
+            if ($row['is_admin']) {
+                header("Location: admin.php"); // Redirect to admin page if user is admin
+                exit(); // Exit after redirection
+            } else {
+                // successfully logged in
+                // creating the SESSION
+                $_SESSION['username'] = $row['username'];
+                $_SESSION['name'] = $row['name'];
+                $_SESSION['user_id'] = $row['user_id'];
+
+                header("Location: main-page.php"); // Redirect to homepage if user is not admin
+                exit(); // Exit after redirection
+            }
+        } else {
+            $msg = "<div class='alert alert-error'>First verify your account and try again.</div>";
+        }
+    } else {
+        $msg = "<div class='alert alert-error'>Email or password do not match.</div>";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -117,49 +162,6 @@
   <a href="welcome.php"><img src="back.png" alt="" id="back-icon"></a>
   <div class="container">
     <h1>Sign In</h1>
-    <?php
-    // Error reporting
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
-    session_start();
-
-    if (isset($_SESSION['SESSION_EMAIL'])) {
-      header("Location: homepage.php"); // Redirect if already logged in
-      exit();
-    }
-
-    include 'config.php'; // Assuming this file contains your database connection code
-
-    $msg = ""; // Initialize the message variable
-
-    if (isset($_POST['submit'])) {
-      $email = mysqli_real_escape_string($conn, $_POST['email']);
-      $password = mysqli_real_escape_string($conn, md5($_POST['password']));
-
-      $sql = "SELECT * FROM users WHERE email='{$email}' AND password='{$password}'";
-      $result = mysqli_query($conn, $sql);
-
-      if ($result && mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-
-        if (strpos($row['code'], '') !== false) {
-          $_SESSION['SESSION_EMAIL'] = $email;
-          if ($row['is_admin']) {
-            header("Location: admin.php"); // Redirect to admin page if user is admin
-            exit(); // Exit after redirection
-          } else {
-            header("Location: main-page.php"); // Redirect to homepage if user is not admin
-            exit(); // Exit after redirection
-          }
-        } else {
-          $msg = "<div class='alert alert-error'>First verify your account and try again.</div>";
-        }
-      } else {
-        $msg = "<div class='alert alert-error'>Email or password do not match.</div>";
-      }
-    }
-    ?>
     <form action="" method="post">
       <div class="email-input">
         <input type="email" id="email" name="email" placeholder=" " required />
