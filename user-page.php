@@ -256,6 +256,7 @@ if (isset($_POST['logout'])) {
 <body>
 
   <div class="container mt-5">
+    
     <!-- First Rounded box with two columns -->
     <div class="row justify-content-center">
       <div class="col-md-6">

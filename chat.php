@@ -42,17 +42,18 @@
 </head>
 <body class="d-flex
              justify-content-center
-             align-items-center
              vh-100">
-    <div class="w-400 shadow p-4 rounded">
-    	<a href="home.php"
-    	   class="fs-4 link-dark">&#8592;</a>
+    <div class="w-400 rounded">
+   
 
-    	   <div class="d-flex align-items-center">
+
+	<div class="pic-container">
+	<a href="home.php"><img src="back.png" alt="" id="back-icon"></a>
+	<div class="d-flex align-items-center mt-3 ">
     	   	  <img src="uploads/<?=$chatWith['p_p']?>"
-    	   	       class="w-15 rounded-circle">
+    	   	       class="w-15 rounded-circle mb-2">
 
-               <h3 class="display-4 fs-sm m-2">
+               <h3 class="display-4 fs-sm m-2 chat-username">
                	  <?=$chatWith['name']?> <br>
                	  <div class="d-flex
                	              align-items-center"
@@ -71,10 +72,13 @@
                	  </div>
                </h3>
     	   </div>
+    </div>
 
-    	   <div class="shadow p-4 rounded
+	<div class="chat-container">
+
+    	   <div class="p-1 rounded
     	               d-flex flex-column
-    	               mt-2 chat-box"
+    	                mt-2 chat-box"
     	        id="chatBox">
     	        <?php 
                      if (!empty($chats)) {
@@ -82,7 +86,7 @@
                      	if($chat['from_id'] == $_SESSION['user_id'])
                      	{ ?>
 						<p class="rtext align-self-end
-						        border rounded p-2 mb-1">
+						        border rounded p-2 mb-2">
 						    <?=$chat['message']?> 
 						    <small class="d-block">
 						    	<?=$chat['created_at']?>
@@ -90,7 +94,7 @@
 						</p>
                     <?php }else{ ?>
 					<p class="ltext border 
-					         rounded p-2 mb-1">
+					         rounded p-2 mb-2">
 					    <?=$chat['message']?> 
 					    <small class="d-block">
 					    	<?=$chat['created_at']?>
@@ -106,15 +110,14 @@
 			   </div>
     	   	<?php } ?>
     	   </div>
-    	   <div class="input-group mb-3">
-    	   	   <textarea cols="3"
-    	   	             id="message"
-    	   	             class="form-control"></textarea>
-    	   	   <button class="btn btn-primary"
-    	   	           id="sendBtn">
-    	   	   	  <i class="fa fa-paper-plane"></i>
-    	   	   </button>
-    	   </div>
+    </div>
+    	   
+	<div class="input-group message-input">
+    <textarea id="message" class="form-control" placeholder="Type your message..."></textarea>
+    <button id="locationBtn" class="btn btn-secondary location-btn"><i class="fa fa-map-marker"></i></button>
+    <button id="sendBtn" class="btn btn-secondary"><i class="fa fa-paper-plane"></i></button>
+</div>
+
 
     </div>
  

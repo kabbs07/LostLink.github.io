@@ -241,7 +241,7 @@
     <!-- Second Rounded box -->
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <h1 class="registered-items-text">Registered Items</h1>
+        <h1 class="registered-items-text">Missing Items</h1>
         <!-- Wrap the container with a div and apply styles -->
         <div class="registered-items-container">
           <!-- Loop through each item in $itemsList -->

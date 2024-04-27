@@ -11,7 +11,7 @@ body{
     background: #fff;
 }
 .display-box{
-    height: 350px;
+    height: 31;
     padding: 10px;
     overflow: scroll;
 }

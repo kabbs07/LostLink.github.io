@@ -31,7 +31,7 @@
 </head>
 <body class="d-flex
              justify-content-center
-             align-items-center
+
              vh-100">
     <div class="p-2 w-400
                 rounded shadow">
@@ -44,18 +44,20 @@
     			            align-items-center">
     			    <img src="uploads/<?=$user['p_p']?>"
     			         class="w-25 rounded-circle">
-                    <h3 class="fs-xs m-2"><?=$user['name']?></h3> 
-    			</div>
-    			<a href="logout.php"
-    			   class="btn btn-dark">Logout</a>
-    		</div>
+                    <h3 class="fs-xs m-2 name-text"><?=$user['name']?></h3> 
+					</div>
+    <a href="logout.php" class="btn btn-dark">
+        <i class="fa fa-sign-out"></i> <!-- Font Awesome Logout Icon -->
+    </a>
+</div>
+
 
     		<div class="input-group mb-3">
     			<input type="text"
     			       placeholder="Search..."
     			       id="searchText"
     			       class="form-control">
-    			<button class="btn btn-primary" 
+    			<button class="btn" 
     			        id="serachBtn">
     			        <i class="fa fa-search"></i>	
     			</button>       
@@ -102,14 +104,13 @@
     		</ul>
     	</div>
     </div>
-	<div class="navbar">
-    <a href="user-page.php" class="active" onclick="changeImage('user')"><img src="fi-sr-user.png" alt=""
-        class="left-icon" id="user-icon"></a>
-    <a href="main-page.php" onclick="changeImage('home')"><img src="fi-rr-home.png" alt="" class="middle-icon"
-        id="home-icon"></a>
-    <a href="home.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
-        id="bell-icon"></a>
-  </div>
+
+ <!-- Navbar-->
+  <div class="navbar">
+  <a href="user-page.php" onclick="changeImage('user')" ><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>
+  <a href="main-page.php" onclick="changeImage('home')" ><img src="fi-rr-home.png" alt="" class="middle-icon" id="home-icon"></a>
+  <a href="home.php" class="active" onclick="changeImage('bell')" ><img src="fi-sr-bell.png" alt="" class="right-icon" id="bell-icon"></a>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
