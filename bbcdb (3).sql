@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 27, 2024 at 10:15 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Apr 27, 2024 at 05:57 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -36,6 +36,21 @@ CREATE TABLE `chats` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `chats`
+--
+
+INSERT INTO `chats` (`chat_id`, `from_id`, `to_id`, `message`, `opened`, `created_at`) VALUES
+(32, 61, 61, 'a', 1, '2024-04-27 23:51:47'),
+(33, 61, 61, 'aaa', 1, '2024-04-27 23:51:49'),
+(34, 61, 61, 'aa', 1, '2024-04-27 23:51:51'),
+(35, 61, 61, 'awdawsddawd', 1, '2024-04-27 23:51:57'),
+(36, 61, 61, 'awsdawd', 1, '2024-04-27 23:51:59'),
+(37, 61, 61, 'awsdaw', 1, '2024-04-27 23:52:00'),
+(38, 61, 10, 'a', 0, '2024-04-27 23:52:08'),
+(39, 61, 61, 'awdawd', 1, '2024-04-27 23:54:05'),
+(40, 61, 61, 'awdasd', 1, '2024-04-27 23:54:08');
+
 -- --------------------------------------------------------
 
 --
@@ -47,6 +62,14 @@ CREATE TABLE `conversations` (
   `user_1` int(11) NOT NULL,
   `user_2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `conversations`
+--
+
+INSERT INTO `conversations` (`conversation_id`, `user_1`, `user_2`) VALUES
+(10, 61, 61),
+(11, 61, 10);
 
 -- --------------------------------------------------------
 
@@ -127,74 +150,6 @@ CREATE TABLE `registered_items` (
   `qrcode_image` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `registered_items`
---
-
-INSERT INTO `registered_items` (`item_id`, `user_id`, `user_name`, `item_name`, `item_image`, `item_description`, `last_seen`, `posted_date`, `qrcode_image`) VALUES
-(69, 56, 'jose', 'asdas', 'uploads/662913ef0852f_peep-32.png', 'asdas', 'dasdas', '2024-04-24 14:15:11', ''),
-(70, 56, 'jose', 'asdasddsgdf', 'uploads/66291405106aa_Frame 2.png', 'gdgdfgd', 'gfdgdf', '2024-04-24 14:15:33', ''),
-(71, 56, 'jose', 'ffghgfddgf', 'uploads/6629140f9ba70_Frame 22.png', 'gfdhdfghgdf', 'hdfghdfghdfg', '2024-04-24 14:15:43', ''),
-(72, 56, 'jose', 'sdgdfsgsdf', 'uploads/662914194aebb_img3.png', 'sdfgsdgdsfgg', 'dgsdgdfs', '2024-04-24 14:15:53', ''),
-(73, 56, 'jose', 'fasfasdfcvxbvxcvb', 'uploads/66291425e0b6a_sample-qr.png', 'cvbbxcvb', 'cvbvxcvb', '2024-04-24 14:16:05', ''),
-(74, 56, 'jose', 'dadas', 'uploads/6629147d5bd7e_upload.png', 'asdasd', 'dsadasda', '2024-04-24 14:17:33', ''),
-(75, 56, 'jose', 'Lenovo Laptop', 'uploads/662914c85395f_1318325.png', 'dasdas', 'asdas', '2024-04-24 14:18:48', ''),
-(76, 56, 'jose', 'wadad', 'uploads/66291b3719de2_img1.png', 'awdad', 'awdad', '2024-04-24 14:46:15', ''),
-(77, 56, 'jose', 'wadad', 'uploads/66291b976132a_img1.png', 'awdad', 'awdad', '2024-04-24 14:47:51', ''),
-(78, 56, 'jose', 'wadad', 'uploads/66291d2d2aee3_BBCLOGO.jpg', 'qwe', 'qwe', '2024-04-24 14:54:37', ''),
-(79, 56, 'jose', 'wadad', 'uploads/66291db6a1689_BBCLOGO.jpg', 'qwe', 'qwe', '2024-04-24 14:56:54', 'qrcodes/qrcode_66291db6b1efa.png'),
-(80, 56, 'jose', 'wadad', 'uploads/66291e413a868_BBCLOGO.jpg', 'qwe', 'qwe', '2024-04-24 14:59:13', 'qrcodes/qrcode_66291e414a8e8.png'),
-(81, 56, 'jose', 'adad', 'uploads/66291e6d62714_Screenshot 2023-08-04 205457.png', 'addd', 'adada', '2024-04-24 14:59:57', 'qrcodes/qrcode_66291e6d78e0f.png'),
-(82, 56, 'jose', 'awdad', 'uploads/662920052416c_aaaa.jpg', 'addd', 'adad', '2024-04-24 15:06:45', ''),
-(83, 56, 'jose', 'wadad', 'uploads/66292052cecc7_Screenshot 2023-06-26 224944.png', 'adwda', 'awdad', '2024-04-24 15:08:02', ''),
-(84, 56, 'jose', 'wadad', 'uploads/662924ff4765a_Screenshot 2023-06-26 224944.png', 'adwda', 'awdad', '2024-04-24 15:27:59', ''),
-(85, 56, 'jose', 'awdada', 'uploads/6629251618670_Screenshot 2023-04-06 000829.png', 'awdad', 'awd', '2024-04-24 15:28:22', ''),
-(86, 56, 'jose', 'awdada', 'uploads/6629262666e0f_Screenshot 2023-04-06 000829.png', 'awdad', 'awd', '2024-04-24 15:32:54', ''),
-(87, 56, 'jose', 'wadadw', 'uploads/6629263a79c3d_Screenshot 2023-06-16 132419.png', 'awdad', 'awdwad', '2024-04-24 15:33:14', ''),
-(88, 56, 'jose', 'adawd', 'uploads/6629274a45bbd_qr_code_a1VqRdUMml5al2qcd8F3w6fKt1Q.jpg', 'awdad', 'awdad', '2024-04-24 15:37:46', ''),
-(89, 56, 'jose', 'adawd', 'uploads/66292773978b3_peep-32.png', 'adawda', 'awdad', '2024-04-24 15:38:27', ''),
-(90, 56, 'jose', 'awda', 'uploads/66292b7395d03_peep-32.png', 'awdaw', 'adada', '2024-04-24 15:55:32', ''),
-(91, 56, 'jose', 'aaa', 'uploads/66292c563582a_peep-32.png', 'wdad', 'awda', '2024-04-24 15:59:18', 'qrcodes/qrcode_66292c5643314.png'),
-(92, 56, 'jose', 'awdad', 'uploads/66292f11ab382_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'wadadw', 'awdad', '2024-04-24 16:10:57', 'qrcodes/qrcode_66292f11b6468.png'),
-(93, 56, 'jose', 'awdad', 'uploadss/66292f3f19a48_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'wadadw', 'awdad', '2024-04-24 16:11:43', 'qrcodes/qrcode_66292f3f27ac4.png'),
-(94, 56, 'jose', 'awdad', 'uploadss/66292f55aaaa3_peep-32.png', 'adawdw', 'adad', '2024-04-24 16:12:05', 'qrcodes/qrcode_66292f55b558b.png'),
-(95, 56, 'jose', 'ad', 'uploadss/662930a44316c_sample.png', 'awd', 'awd', '2024-04-24 16:17:40', 'qrcodes/qrcode_662930a451d7f.png'),
-(96, 56, 'jose', 'ad', 'uploadss/662930a443346_download.png', 'awd', 'awd', '2024-04-24 16:17:40', 'qrcodes/qrcode_662930a451d7f.png'),
-(97, 56, 'jose', 'ad', 'uploadss/662930a4435d4_peep-32.png', 'awd', 'awd', '2024-04-24 16:17:40', 'qrcodes/qrcode_662930a451d7f.png'),
-(98, 56, 'jose', '3', 'uploadss/662930d8ca3a9_412596752_899766361750662_1039915902506415781_n.jpg', 'wdwad', 'ada', '2024-04-24 16:18:32', 'qrcodes/qrcode_662930d8d7535.png'),
-(99, 56, 'jose', '3', 'uploadss/662930d8ca668_412440253_2300568350147097_312249661978300100_n.jpg', 'wdwad', 'ada', '2024-04-24 16:18:32', 'qrcodes/qrcode_662930d8d7535.png'),
-(100, 56, 'jose', '3', 'uploadss/66293164ae465_peep-32.png', 'ad', 'awd', '2024-04-24 16:20:52', 'qrcodes/qrcode_66293164b5d09.png'),
-(101, 56, 'jose', '3', 'uploadss/66293164ae5cb_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'ad', 'awd', '2024-04-24 16:20:52', 'qrcodes/qrcode_66293164b5d09.png'),
-(102, 56, 'jose', '3', 'uploadss/66293164ae7bc_qr_code_a1VqRdUMml5al2qcd8F3w6fKt1Q.jpg', 'ad', 'awd', '2024-04-24 16:20:52', 'qrcodes/qrcode_66293164b5d09.png'),
-(103, 56, 'jose', 'wadad', 'uploadss/66293487cb133_sample.png', 'awda', 'ada', '2024-04-24 16:34:15', 'qrcodes/qrcode_66293487d32c3.png'),
-(104, 56, 'jose', 'wadad', 'uploadss/66293487cb2d3_download.png', 'awda', 'ada', '2024-04-24 16:34:15', 'qrcodes/qrcode_66293487d32c3.png'),
-(105, 56, 'jose', 'wadad', 'uploadss/66293487cb4bc_peep-32.png', 'awda', 'ada', '2024-04-24 16:34:15', 'qrcodes/qrcode_66293487d32c3.png'),
-(106, 56, 'jose', 'wadad', 'uploadss/66293554c1f25_sample.png', 'adad', 'awda', '2024-04-24 16:37:40', 'qrcodes/qrcode_66293554ca43c.png'),
-(107, 56, 'jose', 'wadad', 'uploadss/66293554c208c_download.png', 'adad', 'awda', '2024-04-24 16:37:40', 'qrcodes/qrcode_66293554ca43c.png'),
-(108, 56, 'jose', 'wadad', 'uploadss/66293554c21c0_peep-32.png', 'adad', 'awda', '2024-04-24 16:37:40', 'qrcodes/qrcode_66293554ca43c.png'),
-(109, 56, 'jose', 'wadad', 'uploadss/66293588e5972_sample.png', 'adad', 'awda', '2024-04-24 16:38:32', 'qrcodes/qrcode_66293588ecf83.png'),
-(110, 56, 'jose', 'wadad', 'uploadss/66293588e5aa6_download.png', 'adad', 'awda', '2024-04-24 16:38:32', 'qrcodes/qrcode_66293588ecf83.png'),
-(111, 56, 'jose', 'wadad', 'uploadss/66293588e5bb7_peep-32.png', 'adad', 'awda', '2024-04-24 16:38:32', 'qrcodes/qrcode_66293588ecf83.png'),
-(112, 56, 'jose', 'wadad', 'uploadss/6629361544c3d_download.png,uploadss/6629361544db3_peep-32.png,uploadss/6629361544eca_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awdawwd', 'ada', '2024-04-24 16:40:53', 'qrcodes/qrcode_662936154c347.png'),
-(113, 56, 'jose', 'wadad', 'uploadss/6629361544c3d_download.png,uploadss/6629361544db3_peep-32.png,uploadss/6629361544eca_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awdawwd', 'ada', '2024-04-24 16:40:53', 'qrcodes/qrcode_662936154c347.png'),
-(114, 56, 'jose', 'wadad', 'uploadss/6629361544c3d_download.png,uploadss/6629361544db3_peep-32.png,uploadss/6629361544eca_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awdawwd', 'ada', '2024-04-24 16:40:53', 'qrcodes/qrcode_662936154c347.png'),
-(115, 56, 'jose', 'wadad', 'uploadss/662936eedbfa6_download.png,uploadss/662936eedc248_peep-32.png,uploadss/662936eedc3a9_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awda', 'awda', '2024-04-24 16:44:30', 'qrcodes/qrcode_662936eee4466.png'),
-(116, 56, 'jose', 'wadad', 'uploadss/662936eedbfa6_download.png,uploadss/662936eedc248_peep-32.png,uploadss/662936eedc3a9_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awda', 'awda', '2024-04-24 16:44:30', 'qrcodes/qrcode_662936eee4466.png'),
-(117, 56, 'jose', 'wadad', 'uploadss/662936eedbfa6_download.png,uploadss/662936eedc248_peep-32.png,uploadss/662936eedc3a9_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awda', 'awda', '2024-04-24 16:44:30', 'qrcodes/qrcode_662936eee4466.png'),
-(118, 53, 'pat', 'wadad', 'uploadss/6629372908a3c_sample.png,uploadss/6629372908bc4_download.png,uploadss/6629372908d5e_peep-32.png', 'awda', 'awdad', '2024-04-24 16:45:29', 'qrcodes/qrcode_6629372913c24.png'),
-(119, 53, 'pat', 'wadad', 'uploadss/6629372908a3c_sample.png,uploadss/6629372908bc4_download.png,uploadss/6629372908d5e_peep-32.png', 'awda', 'awdad', '2024-04-24 16:45:29', 'qrcodes/qrcode_6629372913c24.png'),
-(120, 53, 'pat', 'wadad', 'uploadss/6629372908a3c_sample.png,uploadss/6629372908bc4_download.png,uploadss/6629372908d5e_peep-32.png', 'awda', 'awdad', '2024-04-24 16:45:29', 'qrcodes/qrcode_6629372913c24.png'),
-(121, 53, 'pat', 'wadad', 'uploadss/662937441a6da_sample.png', 'awda', 'awdad', '2024-04-24 16:45:56', 'qrcodes/qrcode_662937442758c.png'),
-(122, 53, 'pat', 'wadad', 'uploadss/662937441aa54_download.png', 'awda', 'awdad', '2024-04-24 16:45:56', 'qrcodes/qrcode_662937442758c.png'),
-(123, 53, 'pat', 'wadad', 'uploadss/662937441acde_peep-32.png', 'awda', 'awdad', '2024-04-24 16:45:56', 'qrcodes/qrcode_662937442758c.png'),
-(124, 53, 'pat', 'awdada', 'uploadss/6629380924701_sample.png,uploadss/6629380924869_download.png,uploadss/66293809249d5_peep-32.png', 'awdad', 'awda', '2024-04-24 16:49:13', 'qrcodes/qrcode_662938092f0d5.png'),
-(125, 56, 'jose', 'wadad', 'uploads/6629387270eef_download.png,uploads/66293872710ce_peep-32.png,uploads/66293872713e9_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awda', 'adwa', '2024-04-24 16:50:58', 'qrcodes/qrcode_662938727d071.png'),
-(126, 53, 'pat', 'awdada', 'uploads/66293a0c31a62_sample.png,uploads/66293a0c31c8f_download.png,uploads/66293a0c31f26_peep-32.png', 'qw', 'awdad', '2024-04-24 16:57:48', 'qrcodes/qrcode_66293a0c3e173.png'),
-(127, 53, 'pat', 'awdada', 'uploads/66293aa2ac840_420007203_1641542926379119_1920459464148839543_n.jpg,uploads/66293aa2ad175_bios.jpg,uploads/66293aa2ad535_act1 systeem admin.png', 'awdaw', 'awd', '2024-04-24 17:00:18', 'qrcodes/qrcode_66293aa2b98d8.png'),
-(128, 53, 'pat', 'wadad', 'uploads/66293e0a671a6_download.png,uploads/66293e0a67660_peep-32.png,uploads/66293e0a67a0f_qr_code_caf3b70ce6a5bca19f2d46187f4f1036.jpg', 'awd', 'awd', '2024-04-24 17:14:50', 'qrcodes/qrcode_66293e0a7e883.png'),
-(129, 53, 'pat', 'awdada', 'uploads/66293e364fda9_skymcxslextollrateclss3.jpg,uploads/66293e365014c_skymcxslextollrateclss2.jpg,uploads/66293e36506a5_skymcxslextollrateclss1.jpg', 'awda', 'awdad', '2024-04-24 17:15:34', 'qrcodes/qrcode_66293e366f7c9.png'),
-(130, 53, 'pat', 'adw', 'uploads/66295c30c5bdc_Screenshot 2023-03-28 024728.png', 'ad', 'ad', '2024-04-24 19:23:29', 'qrcodes/qrcode_66295c3141232.png');
-
 -- --------------------------------------------------------
 
 --
@@ -272,25 +227,26 @@ INSERT INTO `tbl_chat` (`id`, `name`, `message`, `date`, `conversation_id`) VALU
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `username` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `p_p` varchar(255) DEFAULT 'user-default.png',
   `code` text NOT NULL,
-  `is_admin` tinyint(1) NOT NULL
+  `is_admin` tinyint(1) NOT NULL,
+  `last_seen` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `email`, `password`, `code`, `is_admin`) VALUES
-(9, 'Patrick', 'patrickjeri.garcia@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', '416ab4ffd75042b667bd7d32a075e7e3', 1),
-(10, 'Garcia', 'garciapatrick341@gmail.com', '202cb962ac59075b964b07152d234b70', '', 0),
-(53, 'pat', 'pgarcia3434@yahoo.com', '202cb962ac59075b964b07152d234b70', '', 0),
-(54, 'jose', 'kabbs2701@gmail.com', '1d72310edc006dadf2190caad5802983', 'verified', 0),
-(56, 'jose', 'jose.cabral@sdca.edu.ph', '1d72310edc006dadf2190caad5802983', '6d6edab3b755bfab47411f71613ff618', 0),
-(57, 'john', 'kabbiecabbs@gmail.com', '1d72310edc006dadf2190caad5802983', 'verified', 0);
+INSERT INTO `users` (`user_id`, `name`, `username`, `email`, `password`, `p_p`, `code`, `is_admin`, `last_seen`) VALUES
+(9, 'Patrick', '', 'patrickjeri.garcia@gmail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'user-default.png', '416ab4ffd75042b667bd7d32a075e7e3', 1, '2024-04-27 16:23:54'),
+(10, 'Garcia', 'Garcia', 'garciapatrick341@gmail.com', '202cb962ac59075b964b07152d234b70', 'user-default.png', '', 0, '2024-04-27 16:23:54'),
+(60, 'Patrick', 'Patrick', 'jhonny52@ymail.com', '202cb962ac59075b964b07152d234b70', 'user-default.png', 'verified', 0, '2024-04-27 23:52:55'),
+(61, 'patrick1', 'patrick1', 'pgarcia3434@yahoo.com', '202cb962ac59075b964b07152d234b70', 'user-default.png', 'verified', 0, '2024-04-27 23:56:39');
 
 --
 -- Indexes for dumped tables
@@ -345,7 +301,7 @@ ALTER TABLE `tbl_chat`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -355,13 +311,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `chats`
 --
 ALTER TABLE `chats`
-  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `chat_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `conversations`
 --
 ALTER TABLE `conversations`
-  MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `conversation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `lost_found_items`
@@ -385,7 +341,7 @@ ALTER TABLE `product_list`
 -- AUTO_INCREMENT for table `registered_items`
 --
 ALTER TABLE `registered_items`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
+  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=132;
 
 --
 -- AUTO_INCREMENT for table `tbl_chat`
@@ -397,7 +353,7 @@ ALTER TABLE `tbl_chat`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
 
 --
 -- Constraints for dumped tables
@@ -407,14 +363,14 @@ ALTER TABLE `users`
 -- Constraints for table `private_messages`
 --
 ALTER TABLE `private_messages`
-  ADD CONSTRAINT `fk_receiver_id` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_sender_id` FOREIGN KEY (`sender_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `fk_receiver_id` FOREIGN KEY (`receiver_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `fk_sender_id` FOREIGN KEY (`sender_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `registered_items`
 --
 ALTER TABLE `registered_items`
-  ADD CONSTRAINT `registered_items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `registered_items_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
