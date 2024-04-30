@@ -117,7 +117,7 @@
 <script>
 	$(document).ready(function(){
       
-      // Search
+    //   search input
        $("#searchText").on("input", function(){
        	 var searchText = $(this).val();
          if(searchText == "") return;

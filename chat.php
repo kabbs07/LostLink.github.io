@@ -73,7 +73,7 @@
                </h3>
     	   </div>
     </div>
-
+<!-- chat container -->
 	<div class="chat-container">
 
     	   <div class="p-1 rounded

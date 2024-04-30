@@ -460,6 +460,12 @@ if ($result && mysqli_num_rows($result) == 1) {
   .btn-danger{
     font-size:11px;
   }
+  .yes-btn{
+    padding:10px 40px 10px 40px;
+  }
+  .no-btn{
+    padding:10px 40px 10px 40px;
+  }
   }
 
 
@@ -529,7 +535,7 @@ if ($result && mysqli_num_rows($result) == 1) {
             <p class="card-text last-seen-text"></i><?php echo $item['last_seen']; ?></p>
             <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
             <p class="card-text owner-name"><?php echo $userName; ?></p>
-            <p class="card-text owner-id">BT19CSE131</p>
+            <p class="card-text owner-id"><small>User ID: # <?php echo $item["user_id"];?></small></p>
           </div>
           <div class="report-btn-container text-center">
             <button class="report-missing-btn">Report Missing</button>
