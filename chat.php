@@ -39,6 +39,7 @@
 	      href="css/style.css">
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body class="d-flex
              justify-content-center
@@ -114,7 +115,7 @@
     	   
 	<div class="input-group message-input">
     <textarea id="message" class="form-control" placeholder="Type your message..."></textarea>
-    <button id="locationBtn" class="btn btn-secondary location-btn"><i class="fa fa-map-marker"></i></button>
+    <button onclick="shareLocation()"id="locationBtn" class="btn btn-secondary location-btn"><i class="fa fa-map-marker"></i></button>
     <button id="sendBtn" class="btn btn-secondary"><i class="fa fa-paper-plane"></i></button>
 </div>
 
@@ -123,7 +124,8 @@
  
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+ <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 <script>
 	var scrollDown = function(){
         let chatBox = document.getElementById('chatBox');
