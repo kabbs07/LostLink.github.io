@@ -33,13 +33,6 @@ if ($itemsResult && mysqli_num_rows($itemsResult) > 0) {
   }
 }
 
-// Logout functionality
-if (isset($_POST['logout'])) {
-  session_unset();
-  session_destroy();
-  header("Location: login.php");
-  exit();
-}
 ?>
 
 <!DOCTYPE html>

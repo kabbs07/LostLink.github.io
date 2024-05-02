@@ -1,3 +1,40 @@
+<?php
+session_start();
+
+// Check if user is not logged in, redirect to login page
+if (!isset($_SESSION['SESSION_EMAIL'])) {
+  header("Location: login.php");
+  exit();
+}
+
+// Include your database connection file (e.g., config.php)
+include 'config.php';
+
+// Fetch user details from the database based on the logged-in email
+$email = $_SESSION['SESSION_EMAIL'];
+$sql = "SELECT * FROM users WHERE email='$email'";
+$result = mysqli_query($conn, $sql);
+if ($result && mysqli_num_rows($result) == 1) {
+  $row = mysqli_fetch_assoc($result);
+  $welcome_message = "Welcome, " . $row['name'] . "!";
+} else {
+  // Redirect to login if user data is not found
+  header("Location: login.php");
+  exit();
+}
+
+// Get missing items from the database
+$missingItemsSql = "SELECT * FROM reported_missing";
+$missingItemsResult = mysqli_query($conn, $missingItemsSql);
+$missingItemsList = [];
+if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
+  while ($missingItemRow = mysqli_fetch_assoc($missingItemsResult)) {
+    $missingItemsList[] = $missingItemRow;
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -238,30 +275,41 @@
   <button class="btn" type="button" id="button-addon2"><i class="fas fa-search"></i>
 </button>
 </div>
-    <!-- Second Rounded box -->
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <h1 class="registered-items-text">Missing Items</h1>
-        <!-- Wrap the container with a div and apply styles -->
-        <div class="registered-items-container">
-          <!-- Loop through each item in $itemsList -->
-            <div class="rounded-box added-items-box">
-              <div class="product-detail d-flex align-items-center justify-content-between">
-                <div class="product-info">
-                  <small></small>
-                  <h2 class="product-name"></h2>
-                  <a href="item_data_page.php" class="view-item-btn">View Item</a>
-                </div>
-                <div class="product-image">
-              
-                </div>
-
-              </div>
+   <!-- Second Rounded box -->
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <h1 class="registered-items-text">Missing Items</h1>
+    <!-- Wrap the container with a div and apply styles -->
+    <div class="registered-items-container">
+      <!-- Loop through each item in $missingItemsList -->
+      <?php foreach ($missingItemsList as $missingItem): ?>
+        <div class="rounded-box added-items-box">
+          <div class="product-detail d-flex align-items-center justify-content-between">
+            <div class="product-info">
+              <small><?php echo $missingItem['last_seen']; ?></small>
+              <h2 class="product-name"><?php echo substr($missingItem['item_name'], 0, 15); ?></h2>
+              <a href="view-missing.php?item_id=<?php echo $missingItem['item_id']; ?>" class="view-item-btn">View Item</a>
             </div>
-          <!-- End of item loop -->
+            <div class="product-image">
+              <?php
+              // Split the item images by comma
+              $images = explode(',', $missingItem['item_image']);
+              if (!empty($images)) {
+                // Output only the first image
+                echo '<img src="' . $images[0] . '" alt="Product Image" style="width: 90px; height: 90px; object-fit: cover;">';
+              } else {
+                // Handle case where no image is available
+                echo 'No Image Available';
+              }
+              ?>
+            </div>
+          </div>
         </div>
-      </div>
+      <?php endforeach; ?>
+      <!-- End of item loop -->
     </div>
+  </div>
+</div>
 
 
 
@@ -293,7 +341,7 @@
 
           // AJAX request to fetch item details
           $.ajax({
-            url: 'fetch_item_details.php',
+            url: 'fetch_missing.php',
             type: 'POST',
             data: { item_id: itemId },
             dataType: 'json',

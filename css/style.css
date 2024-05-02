@@ -286,5 +286,7 @@ a{
 .chat-username{
 	text-transform: capitalize;
 }
-
+.ltext a {
+    color: #fff;
+}
   

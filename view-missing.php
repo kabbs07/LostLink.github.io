@@ -1,20 +1,47 @@
 <?php
-// Fetch item details from the URL parameters
-if (isset($_GET['itemData'])) {
-  $itemData = urldecode($_GET['itemData']);
-  parse_str($itemData, $itemParams);
+session_start();
 
-  // Check if the keys exist before accessing them
-  if (isset($itemParams['User Name'], $itemParams['Item Name'], $itemParams['Item Description'], $itemParams['Last Seen'])) {
-    $userName = $itemParams['User Name'];
-    $itemName = $itemParams['Item Name'];
-    $itemDescription = $itemParams['Item Description'];
-    $lastSeen = $itemParams['Last Seen'];
+// Check if user is not logged in, redirect to login page
+if (!isset($_SESSION['SESSION_EMAIL'])) {
+  header("Location: login.php");
+  exit();
+}
 
-    // Now you can use these variables to display item details in the HTML below
+// Include your database connection file (e.g., config.php)
+include 'config.php';
+
+// Check if item ID is provided in the URL
+if (isset($_GET['item_id']) && filter_var($_GET['item_id'], FILTER_VALIDATE_INT)) {
+  $itemId = $_GET['item_id'];
+
+  // Fetch item details from the database based on the item ID
+  $itemSql = "SELECT * FROM reported_missing WHERE item_id='$itemId'";
+  $itemResult = mysqli_query($conn, $itemSql);
+  if ($itemResult && mysqli_num_rows($itemResult) == 1) {
+    $item = mysqli_fetch_assoc($itemResult);
   } else {
-    echo "One or more required parameters are missing."; // Debugging line
+    // Redirect if item not found
+    header("Location: user-page.php");
+    exit();
   }
+} else {
+  // Redirect if item ID is not provided in the URL or is invalid
+  header("Location: user-page.php");
+  exit();
+}
+
+// Fetch user details from the database based on the logged-in email
+$email = $_SESSION['SESSION_EMAIL'];
+$sql = "SELECT * FROM users WHERE email='$email'";
+$result = mysqli_query($conn, $sql);
+if ($result && mysqli_num_rows($result) == 1) {
+  $row = mysqli_fetch_assoc($result);
+  $userId = $row['user_id']; // Get user ID
+  $userName = $row['name']; // Get user name
+} else {
+  // Redirect to login if user data is not found
+  header("Location: login.php");
+  exit();
 }
 ?>
 
@@ -28,6 +55,9 @@ if (isset($_GET['itemData'])) {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- Font Awesome CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Actor&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.0/css/iziModal.min.css">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -335,24 +365,25 @@ if (isset($_GET['itemData'])) {
     }
 
     .modal-item-Name {
-  margin-bottom: 2rem;
-  margin-top: -0.5rem; 
-  overflow-wrap: break-word; /* Allow long words to break and wrap */
-}
+      margin-bottom: 2rem;
+      margin-top: -0.5rem;
+      overflow-wrap: break-word;
+      /* Allow long words to break and wrap */
+    }
 
-.modal-item-Name h2 {
-  font-size: 15px;
-  font-weight: bold;
-  margin-left:0.7rem;
-  margin-right:0.7rem;
-  color: #33363896;
-}
+    .modal-item-Name h2 {
+      font-size: 15px;
+      font-weight: bold;
+      margin-left: 0.7rem;
+      margin-right: 0.7rem;
+      color: #33363896;
+    }
 
 
     .qr-img-container img {
       width: 250px;
       height: 250px;
-      margin-top:1rem
+      margin-top: 1rem
     }
 
     .exit-btn {
@@ -383,57 +414,70 @@ if (isset($_GET['itemData'])) {
       margin-top: 2rem;
       padding: 1rem:
     }
-    #closeEditModal{
-      font-size:25px;
+
+    #closeEditModal {
+      font-size: 25px;
     }
+
     /* Center the "Save changes" button */
-.modal-footer button {
-  margin: 0 auto; /* Center the button horizontally */
-}
-  /* Define the custom focus ring color */
-  .form-control:focus {
-    outline: none !important;
-        box-shadow: none !important;
-        border-color: #6200EE;
+    .modal-footer button {
+      margin: 0 auto;
+      /* Center the button horizontally */
+    }
 
-  }
-  .no-btn{
-    padding:10px 50px 10px 50px;
-    font-weight:bold;
-    border-radius:25px 25px;
-    color:white;
-    margin:0.5rem;
+    /* Define the custom focus ring color */
+    .form-control:focus {
+      outline: none !important;
+      box-shadow: none !important;
+      border-color: #6200EE;
 
+    }
 
-  }
-  .yes-btn{
-    color:white;
-    background-color:#6200EE;
-    padding:10px 50px 10px 50px;
-    font-weight:bold;
-    border-radius:25px 25px;
-    margin:0.5rem;
-
-  }
-
-  
-  .delete-p{
-    font-family: "Poppins", sans-serif;
-    color:black;
-    font-size:12px;
-    color: #33363896;
-  }
- 
-  @media (max-width: 368px){
-    .btn-secondary{
-    font-size:11px;
-  }
-  .btn-danger{
-    font-size:11px;
-  }
-  }
+    .no-btn {
+      padding: 10px 50px 10px 50px;
+      font-weight: bold;
+      border-radius: 25px 25px;
+      color: white;
+      margin: 0.5rem;
 
 
+    }
+
+    .yes-btn {
+      color: white;
+      background-color: #6200EE;
+      padding: 10px 50px 10px 50px;
+      font-weight: bold;
+      border-radius: 25px 25px;
+      margin: 0.5rem;
+
+    }
+
+
+    .delete-p {
+      font-family: "Poppins", sans-serif;
+      color: black;
+      font-size: 12px;
+      color: #33363896;
+    }
+
+    @media (max-width: 368px) {
+      .btn-secondary {
+        font-size: 11px;
+      }
+
+      .btn-danger {
+        font-size: 11px;
+      }
+
+      .yes-btn {
+        padding: 10px 40px 10px 40px;
+      }
+
+      .no-btn {
+        padding: 10px 40px 10px 40px;
+      }
+    }
   </style>
 </head>
 
@@ -443,60 +487,71 @@ if (isset($_GET['itemData'])) {
   <div class="container">
     <div class="row justify-content-md-center">
       <div class="col-md-6 item-box">
-        <div class="dropdown text-end">
+        <!-- <div class="dropdown text-end">
+          <a href="#" role="button" id="moreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="more_vert.png" alt="" id="more-icon">
+          </a>
           <ul class="dropdown-menu" aria-labelledby="moreDropdown">
-            <!-- Add event listeners to open the edit and delete modals -->
+            Add event listeners to open the edit and delete modals
             <li><a class="dropdown-item edit-item" href="#" onclick="openEditModal()">Edit</a></li>
             <li><a class="dropdown-item delete-item" href="#" onclick="openDeleteModal()">Delete</a></li>
           </ul>
-        </div>
+        </div> -->
 
 
 
         <div class="card mb-1 mt-4">
-  <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <?php
-      // Split the item images by comma
-      $images = explode(',', $item['item_image']);
-      $active = 'active'; // Set the active class for the first image
-      foreach ($images as $image) {
-        echo '<div class="carousel-item ' . $active . '">';
-        echo '<div class="image-wrapper">';
-        echo '<img src="' . $image . '" class="card-img-top" alt="Item Image">';
-        echo '</div>';
-        echo '</div>';
-        $active = ''; // Remove active class for subsequent images
-      }
-      ?>
-    </div>
-    <!-- Previous and Next buttons -->
-    <button class="carousel-control-prev visually-hidden" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </button>
-    <button class="carousel-control-next visually-hidden" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </button>
-  </div>
-</div>
+          <div id="imageCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <?php
+              // Split the item images by comma
+              $images = explode(',', $item['item_image']);
+              $active = 'active'; // Set the active class for the first image
+              foreach ($images as $image) {
+                echo '<div class="carousel-item ' . $active . '">';
+                echo '<div class="image-wrapper">';
+                echo '<img src="' . $image . '" class="card-img-top" alt="Item Image">';
+                echo '</div>';
+                echo '</div>';
+                $active = ''; // Remove active class for subsequent images
+              }
+              ?>
+            </div>
+            <!-- Previous and Next buttons -->
+            <button class="carousel-control-prev visually-hidden" type="button" data-bs-target="#imageCarousel"
+              data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next visually-hidden" type="button" data-bs-target="#imageCarousel"
+              data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
 
+        <!-- Link to trigger the modal -->
+      
         <!-- Details Card -->
         <div class="card mb-4 item-detail-card">
           <div class="card-body">
-            <p class="item-status">Not Missing</p>
-            <h5 class="card-title"><?php echo $itemName; ?></h5>
+            <p class="item-status">Missing</p>
+            <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
             <p class="item-description-title">Description</p>
-            <p class="card-text item-description-text"><?php echo $itemDescription; ?></p>
+            <p class="card-text item-description-text"><?php echo $item['item_description']; ?></p>
             <p class="last-seen-title"><img src="location_on.png" alt="" class="location-icon"></i>Last Seen</p>
-            <p class="card-text last-seen-text"></i><?php echo $lastSeen; ?></p>
+            <p class="card-text last-seen-text"></i><?php echo $item['last_seen']; ?></p>
             <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
             <p class="card-text owner-name"><?php echo $userName; ?></p>
-            <p class="card-text owner-id">BT19CSE131</p>
+            <p class="card-text owner-id"><small>User ID: # <?php echo $item["user_id"]; ?></small></p>
           </div>
-          <div class="message-owner-btn-container text-center">
-            <button>Message Owner</button>
+          <div class="report-btn-container text-center">
+            <button class="report-missing-btn" id="reportMissingBtn">Contact Owner</button>
+            <script>
+         
+
+          </script>
           </div>
         </div>
       </div>
@@ -505,52 +560,55 @@ if (isset($_GET['itemData'])) {
 
   <!-- edit modal -->
   <div class="modal" id="editModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-bottom">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><b>Edit Item Details</b></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=closeEditModal()></button>
-      </div>
-      <div class="modal-body">
-        <!-- Input fields for editing item details -->
-        <div class="mb-3">
-          <label for="itemName" class="form-label">Item Name</label>
-          <input type="text" class="form-control" id="itemName" value="<?php echo $item['item_name']; ?>">
+    <div class="modal-dialog modal-dialog-centered modal-bottom">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><b>Edit Item Details</b></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick=closeEditModal()></button>
         </div>
-        <div class="mb-3">
-          <label for="itemDescription" class="form-label">Item Description</label>
-          <textarea class="form-control" id="itemDescription" rows="3"><?php echo $item['item_description']; ?></textarea>
+        <div class="modal-body">
+          <!-- Input fields for editing item details -->
+          <div class="mb-3">
+            <label for="itemName" class="form-label">Item Name</label>
+            <input type="text" class="form-control" id="itemName" value="<?php echo $item['item_name']; ?>">
+          </div>
+          <div class="mb-3">
+            <label for="itemDescription" class="form-label">Item Description</label>
+            <textarea class="form-control" id="itemDescription"
+              rows="3"><?php echo $item['item_description']; ?></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="lastSeen" class="form-label">Item Name</label>
+            <input type="text" class="form-control" id="lastSeen" value="<?php echo $item['last_seen']; ?>">
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="lastSeen" class="form-label">Item Name</label>
-          <input type="text" class="form-control" id="lastSeen" value="<?php echo $item['last_seen']; ?>">
+        <div class="modal-footer text-center">
+          <button type="button" class="save-changes-btn" id="saveChangesBtn">Save changes</button>
         </div>
-      </div>
-      <div class="modal-footer text-center">
-        <button type="button" class="">Save changes</button>
+
       </div>
     </div>
   </div>
-</div>
 
 
-<!-- Delete Modal -->
-<div class="modal" id="deleteModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-bottom">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="text-center">
-          <h5>Are you sure? </h5>
-          <p class="delete-p">Do you really want to delete this item? This process cannot be undone.</p>
+  <!-- Delete Modal -->
+  <div class="modal" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-bottom">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="text-center">
+            <h5>Are you sure? </h5>
+            <p class="delete-p">Do you really want to delete this item? This process cannot be undone.</p>
+          </div>
         </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn yes-btn btn-secondary" onclick="deleteItem()">Yes</button>
-        <button type="button" class="btn no-btn btn-danger" onclick="closeDeleteModal()">No</button>
+        <div class="modal-footer">
+          <button type="button" class="btn yes-btn btn-secondary" onclick="deleteItem()">Yes</button>
+          <button type="button" class="btn no-btn btn-danger" onclick="closeDeleteModal()">No</button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
 
@@ -591,7 +649,9 @@ if (isset($_GET['itemData'])) {
         <h2><?php echo $item['item_name']; ?></h2>
       </div>
       <div class="modal-exit-btn text-center">
-      <a href="<?php echo $qrcodeImagePath; ?>" download="<?php echo $qrcodeImagePath; ?>.png" class="download-qr-btn">Download QR Code</a><br> <!-- Make the QR code downloadable with the default QR code name -->
+        <a href="<?php echo $qrcodeImagePath; ?>" download="<?php echo $qrcodeImagePath; ?>.png"
+          class="download-qr-btn">Download QR Code</a><br>
+        <!-- Make the QR code downloadable with the default QR code name -->
         <button class="exit-btn" onclick="closeModal()">Exit</button>
       </div>
     </div>
@@ -608,12 +668,9 @@ if (isset($_GET['itemData'])) {
 
 
   <div class="navbar">
-    <a href="user-page.php" class="active" onclick="changeImage('user')"><img src="fi-sr-user.png" alt=""
-        class="left-icon" id="user-icon"></a>
-    <a href="main-page.php" onclick="changeImage('home')"><img src="fi-rr-home.png" alt="" class="middle-icon"
-        id="home-icon"></a>
-    <a href="notif-page.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
-        id="bell-icon"></a>
+    <a href="user-page.php" onclick="changeImage('user')"><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>
+    <a href="main-page.php" class="active" onclick="changeImage('home')"><img src="fi-sr-home.png" alt="" class="middle-icon" id="home-icon"></a>
+    <a href="home.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon" id="bell-icon"></a>
   </div>
 
   <!-- Bootstrap JS -->
@@ -656,8 +713,8 @@ if (isset($_GET['itemData'])) {
       modal.style.display = "none";
     }
 
-     // Function to handle the delete operation
-     function deleteItem() {
+    // Function to handle the delete operation
+    function deleteItem() {
       // Get the item ID
       var itemId = "<?php echo $itemId; ?>";
 
@@ -666,7 +723,7 @@ if (isset($_GET['itemData'])) {
         url: "delete_item.php",
         type: "POST",
         data: { item_id: itemId },
-        success: function(response) {
+        success: function (response) {
           // Check if deletion was successful
           if (response == "success") {
             // Redirect to user page or perform any other action as needed
@@ -678,6 +735,41 @@ if (isset($_GET['itemData'])) {
         }
       });
     }
+
+    // Function to handle saving changes to item details
+    function saveChanges() {
+      // Get the updated values from the input fields
+      var itemName = document.getElementById("itemName").value;
+      var itemDescription = document.getElementById("itemDescription").value;
+      var lastSeen = document.getElementById("lastSeen").value;
+      var itemId = "<?php echo $itemId; ?>"; // Get the item ID
+
+      // Send an AJAX request to update_item.php
+      $.ajax({
+        url: "update_item.php",
+        type: "POST",
+        data: {
+          item_id: itemId,
+          item_name: itemName,
+          item_description: itemDescription,
+          last_seen: lastSeen
+        },
+        success: function (response) {
+          // Check if update was successful
+          if (response == "success") {
+            // Redirect to user page or perform any other action as needed
+            location.reload();
+          } else {
+            // Handle error
+            alert("Failed to update item details. Please try again.");
+          }
+        }
+      });
+    }
+
+    // Add event listener to the "Save Changes" button
+    document.getElementById("saveChangesBtn").addEventListener("click", saveChanges);
+
   </script>
 
 

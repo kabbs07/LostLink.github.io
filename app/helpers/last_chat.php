@@ -9,5 +9,14 @@ function lastChat($id_1, $id_2, $conn){
     $stmt->execute(['id1' => $id_1, 'id2' => $id_2]);
 
     $chat = $stmt->fetch();
-    return $chat['message'] ?? '';
+    // Sanitize the message content to prevent HTML rendering issues
+    $message = htmlspecialchars($chat['message'] ?? '');
+
+    // Shorten the message if it's longer than 10 characters
+    if (strlen($message) > 25) {
+        $message = substr($message, 0, 25) . '...';
+    }
+
+    return $message;
 }
+
