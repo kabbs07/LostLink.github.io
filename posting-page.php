@@ -288,9 +288,6 @@ if ($result && mysqli_num_rows($result) == 1) {
                     required></textarea>
             </div>
             <br>
-            <div class="mb-3">
-                <label for="last_seen" class="form-label">Last Seen:</label>
-                <input type="text" class="form-control" id="last_seen" name="last_seen" required>
                 <input type="hidden" id="qr_data" name="qr_data" value="<?php echo generateRandomString(); ?>">
                 <?php
                 function generateRandomString($length = 10)
@@ -458,7 +455,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
     // Validate and sanitize inputs
     $itemName = mysqli_real_escape_string($conn, $_POST['item_name']);
     $itemDescription = mysqli_real_escape_string($conn, $_POST['item_description']);
-    $lastSeen = mysqli_real_escape_string($conn, $_POST['last_seen']);
     $qrData = mysqli_real_escape_string($conn, $_POST['qr_data']); // Add this line to get qr_data value
     // Check if files were uploaded without errors
     if (!empty(array_filter($_FILES['item_image']['name']))) {
@@ -519,8 +515,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $imagePaths = implode(",", $uploadedImages);
 
             // Insert data into registered_items table with concatenated image paths
-            $sql = "INSERT INTO registered_items (user_id, user_name, item_name, item_image, item_description, last_seen, qrcode_image, qr_data)
-            VALUES ('$userId', '$userName', '$itemName', '$imagePaths', '$itemDescription', '$lastSeen', '$qrcodeFileName', '$qrData')";
+            $sql = "INSERT INTO registered_items (user_id, user_name, item_name, item_image, item_description, qrcode_image, qr_data)
+            VALUES ('$userId', '$userName', '$itemName', '$imagePaths', '$itemDescription', '$qrcodeFileName', '$qrData')";
 
             if (mysqli_query($conn, $sql)) {
                 echo "<script>alert('Item posted successfully.');</script>";

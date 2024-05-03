@@ -604,10 +604,6 @@ if ($result && mysqli_num_rows($result) == 1) {
             <textarea class="form-control" id="itemDescription"
               rows="3"><?php echo $item['item_description']; ?></textarea>
           </div>
-          <div class="mb-3">
-            <label for="lastSeen" class="form-label">Item Name</label>
-            <input type="text" class="form-control" id="lastSeen" value="<?php echo $item['last_seen']; ?>">
-          </div>
         </div>
         <div class="modal-footer text-center">
           <button type="button" class="save-changes-btn" id="saveChangesBtn">Save changes</button>
@@ -770,7 +766,6 @@ if ($result && mysqli_num_rows($result) == 1) {
       // Get the updated values from the input fields
       var itemName = document.getElementById("itemName").value;
       var itemDescription = document.getElementById("itemDescription").value;
-      var lastSeen = document.getElementById("lastSeen").value;
       var itemId = "<?php echo $itemId; ?>"; // Get the item ID
 
       // Send an AJAX request to update_item.php
@@ -781,7 +776,6 @@ if ($result && mysqli_num_rows($result) == 1) {
           item_id: itemId,
           item_name: itemName,
           item_description: itemDescription,
-          last_seen: lastSeen
         },
         success: function (response) {
           // Check if update was successful
