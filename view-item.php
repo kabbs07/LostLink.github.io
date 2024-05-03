@@ -537,7 +537,7 @@ if ($result && mysqli_num_rows($result) == 1) {
         <!-- Details Card -->
         <div class="card mb-4 item-detail-card">
           <div class="card-body">
-            <p class="item-status">Not Missing</p>
+            <p class="item-status"><?php echo $item['is_missing']; ?></p>
             <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
             <p class="item-description-title">Description</p>
             <p class="card-text item-description-text"><?php echo $item['item_description']; ?></p>

@@ -12,7 +12,7 @@ $sql = "SELECT * FROM users WHERE email='$email'";
 $result = mysqli_query($conn, $sql);
 if ($result && mysqli_num_rows($result) == 1) {
   $row = mysqli_fetch_assoc($result);
-  $userId = $row['id']; // Get user ID
+  $userId = $row['user_id']; // Get user ID
   $userName = $row['name']; // Get user name
 } else {
   // Redirect to login if user data is not found

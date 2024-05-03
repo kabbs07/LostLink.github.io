@@ -1,22 +1,60 @@
 <?php
+// Include your database connection file
+include_once 'config.php'; // Update this with the correct file path
+
 // Fetch item details from the URL parameters
 if (isset($_GET['itemData'])) {
-  $itemData = urldecode($_GET['itemData']);
-  parse_str($itemData, $itemParams);
+  $itemData = $_GET['itemData'];
 
-  // Check if the keys exist before accessing them
-  if (isset($itemParams['User Name'], $itemParams['Item Name'], $itemParams['Item Description'], $itemParams['Last Seen'])) {
-    $userName = $itemParams['User Name'];
-    $itemName = $itemParams['Item Name'];
-    $itemDescription = $itemParams['Item Description'];
-    $lastSeen = $itemParams['Last Seen'];
+  // Extract QR data from the item data
+  $qrData = substr($itemData, strpos($itemData, "QR Data: ") + 9);
 
-    // Now you can use these variables to display item details in the HTML below
+  // Query to fetch item details based on qr_data
+  $sql = "SELECT * FROM registered_items WHERE qr_data = ?";
+  
+  // Prepare the statement
+  $stmt = $conn->prepare($sql);
+  
+  if ($stmt) {
+    // Bind the parameter
+    $stmt->bind_param("s", $qrData);
+    
+    // Execute the statement
+    $stmt->execute();
+    
+    // Get the result
+    $result = $stmt->get_result();
+    
+    // Check if result exists and fetch the item data
+    if ($result && $result->num_rows > 0) {
+      $item = $result->fetch_assoc();
+
+      // Fetch the item images and split them into an array
+      $images = explode(',', $item['item_image']);
+
+      // Extract other item details
+      $user_id = $item['user_id'];
+      $itemName = $item['item_name'];
+      $itemstatus = $item['is_missing'];
+      $itemDescription = $item['item_description'];
+      $lastSeen = $item['last_seen'];
+      $userName = $item['user_name'];
+
+      // Now you can use these variables to display item details in your HTML
+    } else {
+      echo "Item not found."; // Debugging line
+    }
   } else {
-    echo "One or more required parameters are missing."; // Debugging line
+    echo "Error executing the query."; // Debugging line
   }
+
+  // Close the statement
+  $stmt->close();
+} else {
+  echo "Item data parameter missing."; // Debugging line
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -485,7 +523,7 @@ if (isset($_GET['itemData'])) {
         <!-- Details Card -->
         <div class="card mb-4 item-detail-card">
           <div class="card-body">
-            <p class="item-status">Not Missing</p>
+            <p class="item-status"><?php echo $itemstatus;?></p>
             <h5 class="card-title"><?php echo $itemName; ?></h5>
             <p class="item-description-title">Description</p>
             <p class="card-text item-description-text"><?php echo $itemDescription; ?></p>
@@ -493,7 +531,7 @@ if (isset($_GET['itemData'])) {
             <p class="card-text last-seen-text"></i><?php echo $lastSeen; ?></p>
             <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
             <p class="card-text owner-name"><?php echo $userName; ?></p>
-            <p class="card-text owner-id">BT19CSE131</p>
+            <p class="card-text owner-id"><small>User ID: # <?php echo $user_id ?></small></p>
           </div>
           <div class="message-owner-btn-container text-center">
             <button>Message Owner</button>

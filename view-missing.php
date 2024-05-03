@@ -543,7 +543,7 @@ if ($result && mysqli_num_rows($result) == 1) {
             <p class="last-seen-title"><img src="location_on.png" alt="" class="location-icon"></i>Last Seen</p>
             <p class="card-text last-seen-text"></i><?php echo $item['last_seen']; ?></p>
             <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
-            <p class="card-text owner-name"><?php echo $userName; ?></p>
+            <p class="card-text owner-name"><?php echo $item['user_name'];; ?></p>
             <p class="card-text owner-id"><small>User ID: # <?php echo $item["user_id"]; ?></small></p>
           </div>
           <div class="report-btn-container text-center">
