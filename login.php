@@ -155,6 +155,24 @@ if (isset($_POST['submit'])) {
     #back-icon {
       margin-top: 10px;
     }
+    .create-container{
+      text-align:center;
+      font-family: "Poppins", sans-serif;
+      position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom:2rem;
+    }
+    .create-container a{
+      font-size:12px;
+      text-decoration:none;
+      color: #6200EE;
+
+    }
+    .create-container p{
+      font-size:14px;
+    }
   </style>
 </head>
 
@@ -174,6 +192,10 @@ if (isset($_POST['submit'])) {
       </div>
       <button type="submit" name="submit">Sign In</button>
     </form>
+  </div>
+  <div class="create-container">
+    <p>Don't have an account yet?</p>
+    <a href="register.php">Create one here</a>
   </div>
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>

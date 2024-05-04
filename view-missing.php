@@ -86,7 +86,7 @@ if ($result && mysqli_num_rows($result) == 1) {
       width: 100%;
       background-color: #fff;
       color: #fff;
-      padding: 20px 0;
+      padding: 22px 0;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       /* Added box-shadow */
@@ -656,16 +656,6 @@ if ($result && mysqli_num_rows($result) == 1) {
       </div>
     </div>
   </div>
-
-
-
-
-
-
-
-
-
-
 
   <div class="navbar">
     <a href="user-page.php" onclick="changeImage('user')"><img src="fi-rr-user.png" alt="" class="left-icon" id="user-icon"></a>

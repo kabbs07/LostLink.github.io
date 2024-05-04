@@ -51,9 +51,11 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
 
 
   <style>
-    body {
-      font-family: "Poppins", sans-serif;
-    }
+  body {
+  font-family: "Poppins", sans-serif;
+  overflow: hidden; /* Add this line to make the page not scrollable */
+}
+
 
     /* Hide scrollbar for webkit browsers (Chrome, Safari) */
     ::-webkit-scrollbar {
@@ -74,7 +76,7 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
       width: 100%;
       background-color: #fff;
       color: #fff;
-      padding: 20px 0;
+      padding: 24px 0;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       /* Added box-shadow */
@@ -239,7 +241,7 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
     /* Add this CSS at the end of your <style> block */
     .registered-items-container {
       overflow-y: auto;
-      max-height: calc(100vh - 340px);
+      max-height: calc(100vh - 230px);
       /* Adjust the value as needed */
       /* 260px is the estimated height of other elements on the page */
     }
@@ -271,7 +273,7 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
 
   <div class="container mt-5">
   <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <input type="text" class="form-control" placeholder="Search Item Name" aria-label="Recipient's username" aria-describedby="button-addon2">
   <button class="btn" type="button" id="button-addon2"><i class="fas fa-search"></i>
 </button>
 </div>
@@ -286,7 +288,7 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
         <div class="rounded-box added-items-box">
           <div class="product-detail d-flex align-items-center justify-content-between">
             <div class="product-info">
-              <small><?php echo $missingItem['last_seen']; ?></small>
+            <small><?php echo date('M j, Y, h:i a', strtotime($missingItem['posted_date'])); ?></small>
               <h2 class="product-name"><?php echo substr($missingItem['item_name'], 0, 15); ?></h2>
               <a href="view-missing.php?item_id=<?php echo $missingItem['item_id']; ?>" class="view-item-btn">View Item</a>
             </div>

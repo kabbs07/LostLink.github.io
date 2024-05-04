@@ -53,6 +53,7 @@ if ($result && mysqli_num_rows($result) == 1) {
   <title>User Page</title>
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
   <!-- Font Awesome CSS -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,7 +86,7 @@ if ($result && mysqli_num_rows($result) == 1) {
       width: 100%;
       background-color: #fff;
       color: #fff;
-      padding: 20px 0;
+      padding: 22px 0;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       /* Added box-shadow */
@@ -307,8 +308,9 @@ if ($result && mysqli_num_rows($result) == 1) {
 
     .person-icon {
       color: #6200EE;
-      margin-right: 0.5rem;
+      margin-right: 0.3rem;
       font-weight: 900;
+
     }
 
     button {
@@ -477,6 +479,14 @@ if ($result && mysqli_num_rows($result) == 1) {
         padding: 10px 40px 10px 40px;
       }
     }
+
+    .report-btn{
+      color: white;
+      padding: 10px 40px 10px 40px;
+      font-weight: bold;
+      border-radius: 25px 25px;
+      margin: 0.5rem;
+    }
   </style>
 </head>
 
@@ -541,48 +551,42 @@ if ($result && mysqli_num_rows($result) == 1) {
             <h5 class="card-title"><?php echo $item['item_name']; ?></h5>
             <p class="item-description-title">Description</p>
             <p class="card-text item-description-text"><?php echo $item['item_description']; ?></p>
-            <p class="last-seen-title"><img src="location_on.png" alt="" class="location-icon"></i>Last Seen</p>
-            <p class="card-text last-seen-text"></i><?php echo $item['last_seen']; ?></p>
+    
             <p class="user-title"><img src="person.png" alt="" class="person-icon">Owner</p>
             <p class="card-text owner-name"><?php echo $userName; ?></p>
             <p class="card-text owner-id"><small>User ID: # <?php echo $item["user_id"]; ?></small></p>
           </div>
           <div class="report-btn-container text-center">
-            <button class="report-missing-btn" id="reportMissingBtn">Report Missing</button>
-            <script>
-         document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('reportMissingBtn').addEventListener('click', function () {
-        // Get the item ID from the page (you may need to adjust this based on your HTML structure)
-        var itemId = <?php echo $itemId; ?>;
-
-        // Create a FormData object to send data in the request
-        var formData = new FormData();
-        formData.append('item_id', itemId);
-
-        // Send an AJAX request to a PHP file to handle the report missing action
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', 'report_missing.php', true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    // Handle success response
-                    alert('Item reported missing successfully!');
-                } else {
-                    // Handle error response
-                    alert('Error reporting item as missing. Please try again.');
-                }
-            }
-        };
-        xhr.send(formData); // Send the FormData object with the request
-    });
-});
-
-          </script>
+            <button class="report-missing-btn" id="reportMissingBtn" onclick="openReportMissingModal()">Report Missing</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+<!-- Report Missing Modal -->
+<div class="modal" id="reportMissingModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-bottom">
+    <div class="modal-content">
+    <div class="modal-header">
+          <h5 class="modal-title"><b>Report Missing Item</b></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick=reportMissingModal()></button>
+        </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="lastSeenInput" class="form-label">Last Seen</label>
+          <input type="text" class="form-control" id="lastSeenInput" placeholder="Enter last seen information">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn report-btn btn-secondary" style="background-color: #6200EE;" onclick="reportMissing()" >Report</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
   <!-- edit modal -->
   <div class="modal" id="editModal" tabindex="-1">
@@ -634,16 +638,8 @@ if ($result && mysqli_num_rows($result) == 1) {
 
 
 
-  <div id="deleteModal" class="modal">
-    <div class="modal-content">
-      <span id="closeDeleteModal" class="close" onclick="closeDeleteModal()">&times;</span>
-      <p>Are you sure you want to delete this item?</p>
-      <div class="button-container">
-        <button onclick="deleteItem()">Yes</button>
-        <button onclick="closeDeleteModal()">No</button>
-      </div>
-    </div>
-  </div>
+
+
 
   <!-- QR Modal HTML -->
   <div id="qrModal" class="modal">
@@ -694,7 +690,7 @@ if ($result && mysqli_num_rows($result) == 1) {
         class="left-icon" id="user-icon"></a>
     <a href="main-page.php" onclick="changeImage('home')"><img src="fi-rr-home.png" alt="" class="middle-icon"
         id="home-icon"></a>
-    <a href="notif-page.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
+    <a href="home.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
         id="bell-icon"></a>
   </div>
 
@@ -703,6 +699,18 @@ if ($result && mysqli_num_rows($result) == 1) {
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.0/js/iziModal.min.js"></script>
   <script>
+
+      // Function to open the report missing modal
+  function openReportMissingModal() {
+    var modal = document.getElementById("reportMissingModal");
+    modal.style.display = "block";
+  }
+
+  // Function to close the report missing modal
+  function closeReportMissingModal() {
+    var modal = document.getElementById("reportMissingModal");
+    modal.style.display = "none";
+  }
     // Function to open the modal
     function openModal() {
       var modal = document.getElementById("qrModal");
@@ -712,6 +720,11 @@ if ($result && mysqli_num_rows($result) == 1) {
     // Function to close the modal
     function closeModal() {
       var modal = document.getElementById("qrModal");
+      modal.style.display = "none";
+    }
+       // Function to close the modal
+       function reportMissingModal() {
+      var modal = document.getElementById("reportMissingModal");
       modal.style.display = "none";
     }
     // Function to open the edit modal

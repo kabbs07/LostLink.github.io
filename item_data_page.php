@@ -86,26 +86,6 @@ if (isset($_GET['itemData'])) {
       scrollbar-width: none;
     }
 
-    /* Navbar styles */
-    .navbar {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background-color: #fff;
-      color: #fff;
-      padding: 20px 0;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-      /* Added box-shadow */
-    }
-
-    .navbar a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 10px;
-      margin-bottom: 0.5rem;
-    }
 
     .left-icon {
       margin-left: 2.5rem;
@@ -347,12 +327,6 @@ if (isset($_GET['itemData'])) {
       margin-bottom: -0.2rem;
     }
 
-    .item-box {
-      overflow-y: auto;
-      max-height: calc(100vh - 110px);
-      /* Adjust the value as needed */
-      /* 260px is the estimated height of other elements on the page */
-    }
 
     .view-qr-link {
       text-decoration: none;
@@ -637,14 +611,7 @@ if (isset($_GET['itemData'])) {
 
 
 
-
-
-
-
-
-
-
-
+<!-- 
   <div class="navbar">
     <a href="user-page.php" class="active" onclick="changeImage('user')"><img src="fi-sr-user.png" alt=""
         class="left-icon" id="user-icon"></a>
@@ -652,11 +619,13 @@ if (isset($_GET['itemData'])) {
         id="home-icon"></a>
     <a href="notif-page.php" onclick="changeImage('bell')"><img src="fi-rr-bell.png" alt="" class="right-icon"
         id="bell-icon"></a>
-  </div>
+  </div> -->
 
   <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.11.6/umd/popper.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.min.js"></script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.6.0/js/iziModal.min.js"></script>
   <script>
     // Function to open the modal
@@ -698,6 +667,11 @@ if (isset($_GET['itemData'])) {
      function deleteItem() {
       // Get the item ID
       var itemId = "<?php echo $itemId; ?>";
+
+       $(document).ready(function() {
+    // Activate the carousel
+    $('#imageCarousel').carousel();
+  });
 
       // Send an AJAX request to delete_item.php
       $.ajax({

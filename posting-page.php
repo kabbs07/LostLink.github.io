@@ -123,21 +123,24 @@ if ($result && mysqli_num_rows($result) == 1) {
     }
 
     .preview-imgs-container {
-        max-height: 95px;
+        max-height: 85px;
         /* Set a maximum height for the container */
         overflow-y: auto;
         /* Enable vertical scrolling */
-        margin-bottom: 0.5em;
+        margin-bottom: 0.3em;
     }
 
     .preview-image {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 10px;
+        padding: 5px;
         border: 1px solid #ccc;
         border-radius: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
+        margin-left:14px;
+        margin-right:14px;
+
     }
 
     .preview-image p {
@@ -282,7 +285,7 @@ if ($result && mysqli_num_rows($result) == 1) {
                 <input type="text" class="form-control" id="item_name" name="item_name" required>
             </div>
             <br>
-            <div class="mb-3 textarea-container">
+            <div class="mb-1 textarea-container">
                 <label for="item_description" class="form-label">Item Description:</label>
                 <textarea class="form-control " id="item_description" name="item_description" rows="4"
                     required></textarea>
@@ -316,7 +319,7 @@ if ($result && mysqli_num_rows($result) == 1) {
                 <div class="preview-images list-group"></div>
             </div>
             <div class="button-qr">
-                <button type="submit" name="submit" data-bs-toggle="modal" data-bs-target="#exampleModal">Generate QR
+                <button type="submit" name="submit">Generate QR
                     Code</button>
             </div>
 
@@ -329,7 +332,7 @@ if ($result && mysqli_num_rows($result) == 1) {
                             <img src="check-upload.gif" alt="">
                         </div>
                         <div class="check-text text-center">
-                            <h1>You have successfully registered your itme!</h1>
+                            <h1>You have successfully registered your item!</h1>
                         </div>
                         <div class="modal-footer text-center align-items-center justify-content-center">
                             <button type="button" class="ok-btn" data-bs-dismiss="modal">OK</button>
@@ -518,8 +521,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit'])) {
             $sql = "INSERT INTO registered_items (user_id, user_name, item_name, item_image, item_description, qrcode_image, qr_data)
             VALUES ('$userId', '$userName', '$itemName', '$imagePaths', '$itemDescription', '$qrcodeFileName', '$qrData')";
 
-            if (mysqli_query($conn, $sql)) {
-                echo "<script>alert('Item posted successfully.');</script>";
+if (mysqli_query($conn, $sql)) {
+    echo "<script type='text/javascript'>
+        $(document).ready(function(){
+            $('#exampleModal').modal('show');
+        });
+    </script>";
+
             } else {
                 echo "<script>alert('Error posting item: " . mysqli_error($conn) . "');</script>";
             }

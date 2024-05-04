@@ -74,7 +74,7 @@ if ($itemsResult && mysqli_num_rows($itemsResult) > 0) {
       width: 100%;
       background-color: #fff;
       color: #fff;
-      padding: 20px 0;
+      padding: 24px 0;
       text-align: center;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
       /* Added box-shadow */
@@ -278,7 +278,7 @@ if ($itemsResult && mysqli_num_rows($itemsResult) > 0) {
             <div class="rounded-box added-items-box">
               <div class="product-detail d-flex align-items-center justify-content-between">
                 <div class="product-info">
-                  <small><?php echo $item['posted_date']; ?></small>
+                <small><?php echo date('M j, Y, h:i a', strtotime($item['posted_date'])); ?></small>
                   <h2 class="product-name"><?php echo substr($item['item_name'], 0, 15); ?></h2>
                   <a href="view-item.php?item_id=<?php echo $item['item_id']; ?>" class="view-item-btn">View Item</a>
                 </div>

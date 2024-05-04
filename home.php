@@ -28,6 +28,16 @@
 	      href="css/style.css">
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+		.alert-info {
+		color: #6200EE;
+	}
+	.alert{
+		border:none;
+		background:none;
+	}
+
+	</style>
 </head>
 <body class="d-flex
              justify-content-center
@@ -42,7 +52,7 @@
 			            align-items-center">
     			<div class="d-flex
     			            align-items-center">
-    			    <img src="uploads/<?=$user['p_p']?>"
+    			    <img id="reloadImage" src="uploads/<?=$user['p_p']?>"
     			         class="w-25 rounded-circle">
                     <h3 class="fs-xs m-2 name-text"><?=$user['name']?></h3> 
 					</div>
@@ -95,7 +105,7 @@
 	    			</li>
     			    <?php } ?>
     			<?php }else{ ?>
-    				<div class="alert alert-info 
+    				<div class="alert alert-info
     				            text-center">
 					   <i class="fa fa-comments d-block fs-big"></i>
                        No messages yet, Start the conversation
@@ -159,6 +169,15 @@
       setInterval(lastSeenUpdate, 10000);
 
     });
+	// Get a reference to the image element
+var img = document.getElementById('reloadImage');
+
+// Add a click event listener to the image
+img.addEventListener('click', function() {
+    // Reload the page when the image is clicked
+    window.location.reload();
+});
+
 </script>
 </body>
 </html>

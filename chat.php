@@ -40,6 +40,16 @@
 	<link rel="icon" href="img/logo.png">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+	<style>
+		.alert-info {
+		color: #6200EE;
+	}
+	.alert{
+		border:none;
+		background:none;
+	}
+
+	</style>
 </head>
 <body class="d-flex
              justify-content-center
