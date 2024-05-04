@@ -547,11 +547,23 @@ if ($result && mysqli_num_rows($result) == 1) {
             <p class="card-text owner-id"><small>User ID: # <?php echo $item["user_id"]; ?></small></p>
           </div>
           <div class="report-btn-container text-center">
-            <button class="report-missing-btn" id="reportMissingBtn">Contact Owner</button>
+          <button class="report-missing-btn" id="reportMissingBtn">Contact Owner</button>
             <script>
-         
+  // Function to redirect to the chat page with the owner's user ID
+  function redirectToChat() {
+    // Get the owner's user ID
+    var ownerId = "<?php echo $item['user_name']; ?>";
+    
+    // Construct the chat page URL with the user ID as a query parameter
+    var chatUrl = "http://localhost/LostLink.github.io/chat.php?user=" + ownerId;
+    
+    // Redirect to the chat page
+    window.location.href = chatUrl;
+  }
 
-          </script>
+  // Add event listener to the "Contact Owner" button
+  document.getElementById("reportMissingBtn").addEventListener("click", redirectToChat);
+</script>
           </div>
         </div>
       </div>

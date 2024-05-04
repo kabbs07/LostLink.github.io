@@ -273,9 +273,64 @@ if ($missingItemsResult && mysqli_num_rows($missingItemsResult) > 0) {
 
   <div class="container mt-5">
   <div class="input-group mb-3">
-  <input type="text" class="form-control" placeholder="Search Item Name" aria-label="Recipient's username" aria-describedby="button-addon2">
+  <input type="text" class="form-control" id="searchInput" placeholder="Search Item Name" aria-label="Recipient's username" aria-describedby="button-addon2">
   <button class="btn" type="button" id="button-addon2"><i class="fas fa-search"></i>
 </button>
+<script>
+  $(document).ready(function () {
+  $('#searchInput').on('input', function () {
+    var searchQuery = $(this).val(); // Get the search query from the input field
+
+    $.ajax({
+      url: 'search_items.php',
+      type: 'POST',
+      data: { search_query: searchQuery },
+      dataType: 'json',
+      success: function (response) {
+  if (response.success) {
+    // Update the displayed items with the filtered list
+    $('.registered-items-container').empty(); // Clear existing items
+    response.items.forEach(function (item) {
+      // Create a Date object from the posted_date
+      var date = new Date(item.posted_date);
+      // Format the date using JavaScript's toLocaleString() or any custom formatter
+      var formattedDate = date.toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
+
+      // Append each item to the container
+      var itemHtml = '<div class="rounded-box added-items-box">' +
+        '<div class="product-detail d-flex align-items-center justify-content-between">' +
+        '<div class="product-info">' +
+        '<small>' + formattedDate + '</small>' +
+        '<h2 class="product-name">' + item.item_name.substring(0, 15) + '</h2>' +
+        '<a href="view-missing.php?item_id=' + item.item_id + '" class="view-item-btn">View Item</a>' +
+        '</div>' +
+        '<div class="product-image">' +
+        '<img src="' + item.item_image + '" alt="Product Image" style="width: 90px; height: 90px; object-fit: cover;">' +
+        '</div>' +
+        '</div>' +
+        '</div>';
+      $('.registered-items-container').append(itemHtml);
+    });
+  } else {
+    // Handle no items found or other errors
+    console.error(response.message);
+  }
+},
+      error: function (xhr, status, error) {
+        console.error(error);
+      }
+    });
+  });
+});
+
+  </script>
 </div>
    <!-- Second Rounded box -->
 <div class="row justify-content-center">

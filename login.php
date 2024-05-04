@@ -2,8 +2,8 @@
 session_start();
 
 if (isset($_SESSION['SESSION_EMAIL'])) {
-    header("Location: main-page.php"); // Redirect if already logged in
-    exit();
+  header("Location: main-page.php"); // Redirect if already logged in
+  exit();
 }
 
 include 'config.php'; // Assuming this file contains your database connection code
@@ -11,36 +11,44 @@ include 'config.php'; // Assuming this file contains your database connection co
 $msg = ""; // Initialize the message variable
 
 if (isset($_POST['submit'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, md5($_POST['password']));
+  $email = mysqli_real_escape_string($conn, $_POST['email']);
+  $password = mysqli_real_escape_string($conn, md5($_POST['password']));
 
-    $sql = "SELECT * FROM users WHERE email='{$email}' AND password='{$password}'";
-    $result = mysqli_query($conn, $sql);
+  $sql = "SELECT * FROM users WHERE email='{$email}' AND password='{$password}'";
+  $result = mysqli_query($conn, $sql);
 
-    if ($result && mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
+  if ($result && mysqli_num_rows($result) === 1) {
+    $row = mysqli_fetch_assoc($result);
 
-        if (strpos($row['code'], '') !== false) {
-            $_SESSION['SESSION_EMAIL'] = $email;
-            if ($row['is_admin']) {
-                header("Location: admin.php"); // Redirect to admin page if user is admin
-                exit(); // Exit after redirection
-            } else {
-                // successfully logged in
-                // creating the SESSION
-                $_SESSION['username'] = $row['username'];
-                $_SESSION['name'] = $row['name'];
-                $_SESSION['user_id'] = $row['user_id'];
-
-                header("Location: main-page.php"); // Redirect to homepage if user is not admin
-                exit(); // Exit after redirection
-            }
+    if (strpos($row['code'], '') !== false) {
+      $_SESSION['SESSION_EMAIL'] = $email;
+      if ($row['is_admin']) {
+        header("Location: admin.php"); // Redirect to admin page if user is admin
+        exit(); // Exit after redirection
+      } else {
+        // successfully logged in
+        // creating the SESSION
+        $_SESSION['username'] = $row['username'];
+        $_SESSION['name'] = $row['name'];
+        $_SESSION['user_id'] = $row['user_id'];
+        // Check if there's a redirect URL
+        if (isset($_GET['redirect'])) {
+          $redirectUrl = urldecode($_GET['redirect']);
+          // Redirect the user to the URL they were trying to access before login
+          header("Location: " . $redirectUrl);
+          exit;
         } else {
-            $msg = "<div class='alert alert-error'>First verify your account and try again.</div>";
+          // If no redirect URL, redirect to the default page (e.g., home page)
+          header("Location: main-page.php");
+          exit;
         }
+      }
     } else {
-        $msg = "<div class='alert alert-error'>Email or password do not match.</div>";
+      $msg = "<div class='alert alert-error'>First verify your account and try again.</div>";
     }
+  } else {
+    $msg = "<div class='alert alert-error'>Email or password do not match.</div>";
+  }
 }
 ?>
 <!DOCTYPE html>
@@ -155,23 +163,26 @@ if (isset($_POST['submit'])) {
     #back-icon {
       margin-top: 10px;
     }
-    .create-container{
-      text-align:center;
+
+    .create-container {
+      text-align: center;
       font-family: "Poppins", sans-serif;
       position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-bottom:2rem;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 2rem;
     }
-    .create-container a{
-      font-size:12px;
-      text-decoration:none;
+
+    .create-container a {
+      font-size: 12px;
+      text-decoration: none;
       color: #6200EE;
 
     }
-    .create-container p{
-      font-size:14px;
+
+    .create-container p {
+      font-size: 14px;
     }
   </style>
 </head>
@@ -200,12 +211,12 @@ if (isset($_POST['submit'])) {
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izitoast/1.4.0/js/iziToast.min.js"></script>
 <script>
-<?php
-if (!empty($msg)) {
-  echo "var message = '" . addslashes($msg) . "';";
-  if (strpos($msg, 'error') !== false) {
-    // Display error message in red
-    echo "iziToast.show({
+  <?php
+  if (!empty($msg)) {
+    echo "var message = '" . addslashes($msg) . "';";
+    if (strpos($msg, 'error') !== false) {
+      // Display error message in red
+      echo "iziToast.show({
       title: '',
       message: message,
       color: 'red',
@@ -215,9 +226,9 @@ if (!empty($msg)) {
       close: true, // Include the close button inside the box
       progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
     });";
-  } else {
-    // Display success message in green
-    echo "iziToast.show({
+    } else {
+      // Display success message in green
+      echo "iziToast.show({
       title: '',
       message: message,
       color: 'green',
@@ -227,9 +238,9 @@ if (!empty($msg)) {
       close: true, // Include the close button inside the box
       progressBarColor: 'rgb(0, 255, 184)' // Custom progress bar color
     });";
+    }
   }
-}
-?>
+  ?>
 
 
 

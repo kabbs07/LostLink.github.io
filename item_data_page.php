@@ -1,7 +1,19 @@
 <?php
+session_start(); // Start the session
+
 // Include your database connection file
 include_once 'config.php'; // Update this with the correct file path
 
+// Check if the user is logged in and get their email
+if (isset($_SESSION['SESSION_EMAIL'])) {
+  $loggedInEmail = $_SESSION['SESSION_EMAIL'];
+
+  // You can use $loggedInEmail to fetch additional user details or perform actions based on the logged-in user
+  // echo "Logged-in User Email: " . $loggedInEmail;
+} else {
+  // Handle the case when the user is not logged in
+  // echo "User is not logged in.";
+}
 // Fetch item details from the URL parameters
 if (isset($_GET['itemData'])) {
   $itemData = $_GET['itemData'];
@@ -508,13 +520,79 @@ if (isset($_GET['itemData'])) {
             <p class="card-text owner-id"><small>User ID: # <?php echo $user_id ?></small></p>
           </div>
           <div class="message-owner-btn-container text-center">
-            <button>Message Owner</button>
+          <button onclick="openMessageModal()">Message Owner</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+  <script>
+  // Function to open the message modal
+function openMessageModal() {
+  var modal = document.getElementById("messageModal");
+  modal.style.display = "block";
+}
 
+// Function to close the message modal
+function closeMessageModal() {
+  var modal = document.getElementById("messageModal");
+  modal.style.display = "none";
+}
+
+// Function to close the message modal
+function closeMessageModal() {
+  var modal = document.getElementById("messageModal");
+  modal.style.display = "none";
+}
+
+// Function to send the selected message type
+function sendMessage(type) {
+  // Get the owner's username
+  var ownerUsername = "<?php echo $userName; ?>";
+
+  if (type === 'email') {
+    // Send email logic
+    console.log('Sending email...');
+  } else if (type === 'message') {
+    // Check if the user is logged in
+    var isLoggedIn = <?php echo isset($_SESSION['SESSION_EMAIL']) ? 'true' : 'false'; ?>;
+
+    // If not logged in, prompt the user to login or signup
+    if (!isLoggedIn) {
+      var confirmLogin = confirm("Please login or signup first to send a chat message.");
+      if (confirmLogin) {
+        // Redirect to the login page with the redirect URL after successful login
+        var redirectUrl = 'http://localhost/LostLink.github.io/chat.php?user=' + ownerUsername;
+        window.location.href = 'http://localhost/LostLink.github.io/login.php?redirect=' + encodeURIComponent(redirectUrl);
+      }
+    } else {
+      // Redirect logged-in users to the chat page
+      var redirectUrl = 'http://localhost/LostLink.github.io/chat.php?user=' + ownerUsername;
+      window.location.href = redirectUrl;
+    }
+  }
+}
+
+
+
+</script>
+
+<!-- Message Modal -->
+<div class="modal" id="messageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-bottom">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"><b>Contact Owner</b></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeMessageModal()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Please select how you want to contact the owner:</p>
+        <button class="btn btn-primary" onclick="sendMessage('email')">Send Email</button>
+        <button class="btn btn-primary" onclick="sendMessage('message')">Send Message</button>
+      </div>
+    </div>
+  </div>
+</div>
   <!-- edit modal -->
   <div class="modal" id="editModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-bottom">

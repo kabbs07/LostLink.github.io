@@ -10,11 +10,12 @@ if (!isset($_SESSION['SESSION_EMAIL'])) {
 // Include your database connection file (e.g., config.php)
 include 'config.php';
 
-// Get the item ID from the POST request
+// Get the item ID and Last Seen from the POST request
 $itemId = isset($_POST['item_id']) ? $_POST['item_id'] : null;
+$lastSeen = isset($_POST['last_seen']) ? $_POST['last_seen'] : null;
 
-// Check if item ID is provided
-if ($itemId) {
+// Check if item ID and Last Seen are provided
+if ($itemId && $lastSeen) {
   // Check if the item is already marked as missing in the registered_items table
   $checkSql = "SELECT * FROM registered_items WHERE item_id='$itemId' AND is_missing='Missing'";
   $checkResult = mysqli_query($conn, $checkSql);
@@ -35,8 +36,8 @@ if ($itemId) {
 
     if ($updateResult) {
       // Insert the item data into the reported_missing table
-      $insertSql = "INSERT INTO reported_missing (user_id, user_name, item_name, item_image, item_description, last_seen, qrcode_image)
-                    VALUES ('{$item['user_id']}', '{$item['user_name']}', '{$item['item_name']}', '{$item['item_image']}', '{$item['item_description']}', '{$item['last_seen']}', '{$item['qrcode_image']}')";
+      $insertSql = "INSERT INTO reported_missing (item_id, user_id, user_name, item_name, item_image, item_description, last_seen, qrcode_image)
+      VALUES ('{$item['item_id']}','{$item['user_id']}', '{$item['user_name']}', '{$item['item_name']}', '{$item['item_image']}', '{$item['item_description']}', '{$lastSeen}', '{$item['qrcode_image']}')";
       $insertResult = mysqli_query($conn, $insertSql);
 
       if ($insertResult) {

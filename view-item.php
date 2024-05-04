@@ -580,12 +580,47 @@ if ($result && mysqli_num_rows($result) == 1) {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn report-btn btn-secondary" style="background-color: #6200EE;" onclick="reportMissing()" >Report</button>
+        <button type="button"id="reportMissingBtnf" class="btn report-btn btn-secondary" style="background-color: #6200EE;" onclick="reportMissing()" >Report</button>
       </div>
     </div>
   </div>
 </div>
+<script>
+       document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('reportMissingBtnf').addEventListener('click', function () {
+        // Get the item ID from the page (you may need to adjust this based on your HTML structure)
+        var itemId = <?php echo $itemId; ?>;
 
+        // Get the Last Seen input value
+        var lastSeen = document.getElementById('lastSeenInput').value;
+
+        // Create a FormData object to send data in the request
+        var formData = new FormData();
+        formData.append('item_id', itemId);
+        formData.append('last_seen', lastSeen); // Include Last Seen in FormData
+
+        // Send an AJAX request to a PHP file to handle the report missing action
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'report_missing.php', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Handle success response by showing the modal
+                    var modal = document.getElementById("exampleModal");
+                    var modalInstance = new bootstrap.Modal(modal);
+                    modalInstance.show();
+                } else {
+                    // Handle error response
+                    alert('Error reporting item as missing. Please try again.');
+                }
+            }
+        };
+        xhr.send(formData); // Send the FormData object with the request
+    });
+});
+
+
+          </script>
 
 
   <!-- edit modal -->

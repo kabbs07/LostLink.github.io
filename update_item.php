@@ -5,18 +5,21 @@ include 'config.php';
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if all required fields are present in the POST request
-    if (isset($_POST['item_id']) && isset($_POST['item_name']) && isset($_POST['item_description']) && isset($_POST['last_seen'])) {
+    if (isset($_POST['item_id']) && isset($_POST['item_name']) && isset($_POST['item_description'])) {
         // Sanitize and validate input
         $itemId = mysqli_real_escape_string($conn, $_POST['item_id']);
         $itemName = mysqli_real_escape_string($conn, $_POST['item_name']);
         $itemDescription = mysqli_real_escape_string($conn, $_POST['item_description']);
-        $lastSeen = mysqli_real_escape_string($conn, $_POST['last_seen']);
 
-        // Update the item details in the database
-        $updateSql = "UPDATE registered_items SET item_name='$itemName', item_description='$itemDescription', last_seen='$lastSeen' WHERE item_id='$itemId'";
-        $updateResult = mysqli_query($conn, $updateSql);
+        // Update the item details in the registered_items table
+        $updateSqlRegisteredItems = "UPDATE registered_items SET item_name='$itemName', item_description='$itemDescription' WHERE item_id='$itemId'";
+        $updateResultRegisteredItems = mysqli_query($conn, $updateSqlRegisteredItems);
 
-        if ($updateResult) {
+        // Update the corresponding item details in the reported_missing table
+        $updateSqlReportedMissing = "UPDATE reported_missing SET item_name='$itemName', item_description='$itemDescription' WHERE item_id='$itemId'";
+        $updateResultReportedMissing = mysqli_query($conn, $updateSqlReportedMissing);
+
+        if ($updateResultRegisteredItems && $updateResultReportedMissing) {
             // Update successful
             echo "success";
         } else {
@@ -31,4 +34,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Invalid request method
     echo "error";
 }
-?>
+
