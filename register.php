@@ -54,12 +54,31 @@ if (isset($_POST['submit'])) {
           $mail->setFrom('lostlinkapp@gmail.com');
           $mail->addAddress($email);
 
-          //Content
-          $mail->isHTML(true);                                  //Set email format to HTML
-          $mail->Subject = 'no reply';
-          $mail->Body = 'Here is the verification link <b><a href="http://localhost/LostLink.github.io/verification.php?code=' . $code . '">http://localhost/LostLink.github.io/verification.php?code=' . $code . '</a></b>';
-
-          $mail->send();
+          $mail->isHTML(true);                                  // Set email format to HTML
+          $mail->Subject = 'LostLink Account Verification';     // Email subject
+          
+          // Stylish email body with improved design and icons
+          $mail->Body = '
+              <div style="background-color: #6200EE; padding: 20px; font-family: Arial, sans-serif; color: #fff; border-radius: 10px;">
+                  <nav style="text-align: center;">
+                      <h2 style="margin: 0; text-align:center; font-size: 24px;">LostLink Account Verification</h2>
+                  </nav>
+                  <div style="background-color: #f4f4f4; padding: 20px; margin-top: 20px; border-radius: 10px;">
+                      <p style="font-size: 16px; font-weight:bold; color: #333;">Dear User,</p>
+                      <p style="font-size: 16px; color: #333;">Please verify your LostLink account by clicking the button below:</p>
+                      <div style="margin-top: 20px;">
+                          <a href="http://localhost/LostLink.github.io/verification.php?code=' . $code . '" style="background-color: #6200EE; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;">
+                              <i style="margin-right: 5px;" class="fas fa-check-circle"></i><b>Verify Account<b/>
+                          </a>
+                      </div>
+                      <p style="font-size: 16px; color: #333; margin-top: 20px;">If you didn\'t request this verification, you can ignore this email.</p>
+                      <p style="font-size: 16px; color: #333;">Best Regards,<br> <span style="font-weight:bold; color: green;">The LostLink Team<span/></p>
+                  </div>
+              </div>
+          ';
+          
+          $mail->send();  // Send the email
+          
           echo 'Message has been sent';
         } catch (Exception $e) {
           echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

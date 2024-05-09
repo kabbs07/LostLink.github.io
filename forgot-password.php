@@ -47,21 +47,33 @@ if (isset($_POST['submit'])) {
                 $mail->setFrom('lostlinkapp@gmail.com');
                 $mail->addAddress($email);
 
-                //Content
-                $mail->isHTML(true);                                  //Set email format to HTML
-                $mail->Subject = 'no reply';
-                $mail->Body    = 'We recently received a request to reset the password for your account. If you did not make this request, please ignore this message and no further action is required.<br><br>
-
-                To reset your password, please click on the following link:<br>
-                <b><a href="http://localhost/LostLink.github.io/change-password.php?reset='.$code.'">http://localhost/LostLink.github.io/change-password.php?reset='.$code.'</a></b><br><br>
+                $mail->isHTML(true);                                  // Set email format to HTML
+                $mail->Subject = 'Lost Link Forgot Password';                          // Email subject
                 
-                You will be redirected to a page where you can create a new password. Please ensure that your new password is unique and difficult for others to guess.<br><br>
+                // Stylish email body with improved design and icons
+                $mail->Body = '
+                    <div style="background-color: #6200EE; padding: 20px; font-family: Arial, sans-serif; color: #fff; border-radius: 10px;">
+                        <nav style="text-align: center;">
+                            <h2 style="margin: 0; font-size: 24px;">LostLink Forgot Password</h2>
+                        </nav>
+                        <div style="background-color: #f4f4f4; padding: 20px; margin-top: 20px; border-radius: 10px;">
+                            <p style="font-size: 16px; font-weight:bold; color: #333;">Dear User,</p>
+                            <p style="font-size: 16px; color: #333;">We recently received a request to reset the password for your account. If you did not make this request, please ignore this message and no further action is required.</p>
+                            <p style="font-size: 16px; color: #333;">To reset your password, please click on the following link:</p>
+                            <div style=" margin-top: 20px;">
+                                <a href="http://localhost/LostLink.github.io/change-password.php?reset='.$code.'" style="background-color: #6200EE; color: #fff; text-decoration: none; padding: 10px 20px; border-radius: 5px; font-size: 16px;">
+                                    <i style="margin-right: 5px;" class="fas fa-unlock-alt"></i><b>Reset Password<b/>
+                                </a>
+                            </div>
+                            <p style="font-size: 16px; color: #333; margin-top: 20px;">You will be redirected to a page where you can create a new password. Please ensure that your new password is unique and difficult for others to guess.</p>
+                            <p style="font-size: 16px; color: #333;">If you have any difficulties or questions, please do not hesitate to contact our customer support team.</p>
+                            <p style="font-size: 16px; color: #333;">Best Regards,<br> <span style="font-weight:bold; color: green;">The LostLink Team<span/></p>
+                        </div>
+                    </div>
+                ';
                 
-                If you have any difficulties or questions, please do not hesitate to contact our customer support team.<br><br>
+                $mail->send();  // Send the email
                 
-                Best regards,<br>';
-
-                $mail->send();
                 echo 'Message has been sent';
             } catch (Exception $e) {
                 echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";

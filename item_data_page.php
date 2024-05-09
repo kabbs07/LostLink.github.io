@@ -448,7 +448,7 @@ if (isset($_GET['itemData'])) {
     color: #33363896;
   }
  
-  @media (max-width: 368px){
+  @media (max-width: 380px){
     .btn-secondary{
     font-size:11px;
   }
@@ -456,6 +456,27 @@ if (isset($_GET['itemData'])) {
     font-size:11px;
   }
   }
+  .email-btn:hover{
+    box-shadow:none;
+    outline:none !important;
+    border:none; 
+    color:green;
+  }
+  .msg-btn:hover{
+    box-shadow:none;
+    outline:none !important;
+    border:none; 
+    color:green;
+  }
+  .msg-btn{
+    color:#6200EA;
+  }
+  .email-btn{
+    color:#6200EA;
+
+  }
+  
+
 
 
   </style>
@@ -577,22 +598,31 @@ function sendMessage(type) {
 
 </script>
 
-<!-- Message Modal -->
+<!-- Contact modal -->
 <div class="modal" id="messageModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-bottom">
     <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title"><b>Contact Owner</b></h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeMessageModal()"></button>
+    <div class="modal-header" style="background:#6200EA;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick=closeMessageModal()></button>
       </div>
       <div class="modal-body">
-        <p>Please select how you want to contact the owner:</p>
-        <button class="btn btn-primary" onclick="sendMessage('email')">Send Email</button>
-        <button class="btn btn-primary" onclick="sendMessage('message')">Send Message</button>
+        <div class="text-center">
+          <h2>Contact Owner</h2>
+          <p class="delete-p" style="font-size:14px;">Please select how you want to contact the owner</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn email-btn " onclick="sendMessage('email')">Email</button>
+        <button type="button" class="btn msg-btn" onclick="sendMessage('message')">Message</button>
       </div>
     </div>
   </div>
 </div>
+
+
+
+
+
   <!-- edit modal -->
   <div class="modal" id="editModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered modal-bottom">
@@ -624,23 +654,7 @@ function sendMessage(type) {
 </div>
 
 
-<!-- Delete Modal -->
-<div class="modal" id="deleteModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered modal-bottom">
-    <div class="modal-content">
-      <div class="modal-body">
-        <div class="text-center">
-          <h5>Are you sure? </h5>
-          <p class="delete-p">Do you really want to delete this item? This process cannot be undone.</p>
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn yes-btn btn-secondary" onclick="deleteItem()">Yes</button>
-        <button type="button" class="btn no-btn btn-danger" onclick="closeDeleteModal()">No</button>
-      </div>
-    </div>
-  </div>
-</div>
+
 
 
 

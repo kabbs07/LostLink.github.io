@@ -444,6 +444,7 @@ if ($result && mysqli_num_rows($result) == 1) {
 
     }
 
+
     .yes-btn {
       color: white;
       background-color: #6200EE;
@@ -487,6 +488,30 @@ if ($result && mysqli_num_rows($result) == 1) {
       border-radius: 25px 25px;
       margin: 0.5rem;
     }
+    .img-body{
+      display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+    }
+    .img-body img{
+      max-width: 100%;
+        max-height: 100%;
+        width: auto;
+        height: auto;
+    }
+    .ok-btn {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+        font-size: 17px;
+    }
+    .check-text h1 {
+        font-family: "Poppins", sans-serif;
+        font-weight: bold;
+        color: #416D19;
+
+    }
+
   </style>
 </head>
 
@@ -580,7 +605,7 @@ if ($result && mysqli_num_rows($result) == 1) {
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button"id="reportMissingBtnf" class="btn report-btn btn-secondary" style="background-color: #6200EE;" onclick="reportMissing()" >Report</button>
+        <button type="button"id="reportMissingBtnf" class="btn report-btn btn-secondary" style="background-color: #6200EE;" onclick="closeReportMissingModal()">Report</button>
       </div>
     </div>
   </div>
@@ -606,9 +631,9 @@ if ($result && mysqli_num_rows($result) == 1) {
             if (xhr.readyState === XMLHttpRequest.DONE) {
                 if (xhr.status === 200) {
                     // Handle success response by showing the modal
-                    var modal = document.getElementById("exampleModal");
-                    var modalInstance = new bootstrap.Modal(modal);
-                    modalInstance.show();
+                    alert('Item reported missing.');
+                    
+
                 } else {
                     // Handle error response
                     alert('Error reporting item as missing. Please try again.');
@@ -621,6 +646,7 @@ if ($result && mysqli_num_rows($result) == 1) {
 
 
           </script>
+
 
 
   <!-- edit modal -->
@@ -751,7 +777,6 @@ if ($result && mysqli_num_rows($result) == 1) {
       var modal = document.getElementById("qrModal");
       modal.style.display = "block";
     }
-
     // Function to close the modal
     function closeModal() {
       var modal = document.getElementById("qrModal");
